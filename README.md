@@ -4,9 +4,9 @@ packages for Peter Phillips and Zhentao Shi (2018): "Boosting the Hodrick-Presco
 
 # 
 
-version : 1.0
+Version : 1.0
 
-2018-07-10
+2018-07-10 
 
 ## Introduction
 
