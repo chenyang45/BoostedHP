@@ -36,7 +36,6 @@ The package is in progress and far from mature.
 #### Example
 ```
 load("Ireland_GDP.RData") # Ireland Annual GDP example in the paper
-source("BoostedHP.R")
 
 lam = 100 # tuning parameter for the annaul data
 
