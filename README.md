@@ -29,9 +29,9 @@ A very preliminary R package can be installed by running in `R`
 ```
 install.packages("devtools")
 devtools::install_github("chenyang45/BoostedHP/BoostedHP")
-library(BoostedHP)
+library("BoostedHP")
 ```
-The package is in progress with assistance from [Yang Chen](https://github.com/chenyang45/BoostedHP).
+The package is in progress and far from mature.
 
 #### Example
 ```
