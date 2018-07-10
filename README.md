@@ -21,7 +21,7 @@ the main function is :
 * `BoostedHP.R` contains the R function to implement the automated boosted HP filter.
 The inputs and outputs are detailed in the beginning of the function.
 
-We welcome comments about the paper and the code.
+We welcome comments the code at any time.
 
 
 To be continued.
