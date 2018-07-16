@@ -41,13 +41,13 @@
 #' bx_HP = BoostedHP(x, lambda = lam, iter= FALSE)$trend
 #'
 
-library(tseries)
-library(expm)
+
 BoostedHP = function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0.050, Max_Iter = 100) {
 
 
   # Require Package: tseries, expm
-
+  library(tseries)
+  library(expm)
   # Inputs
   #   x: a univariate time series
   #   lambda: the tuning parameter in the HP filter (base learner). Default is 1600.
