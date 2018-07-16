@@ -14,14 +14,34 @@
 # Version 0.5 fixed the location of text message
 # revised date:2018-16-07
 
-library(tseries)
-library(expm)
 
+
+#' Iterated HP-filter Conduction
+#'
+#' @param x
+#' @param lambda
+#' @param iter
+#' @param test_type
+#' @param sig_p
+#' @param Max_Iter
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' lam = 100 # tuning parameter for the annual data
+#'
+#' bx_HP = BoostedHP(IRE, lambda = lam, iter= FALSE) # raw HP filter
+#'
+#' bx_ADF = BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf", sig_p = 0.050)
+#'
 BoostedHP = function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0.050, Max_Iter = 100) {
 
 
-  # Require Package: tseries, expm
 
+  # Require Package: tseries, expm
+  library(tseries)
+  library(expm)
   # Inputs
   #   x: a univariate time series
   #   lambda: the tuning parameter in the HP filter (base learner). Default is 1600.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/BoostedHP.R
 \name{BoostedHP}
 \alias{BoostedHP}
-\title{one in all function of iterated HP-filter}
+\title{Title}
 \usage{
 BoostedHP(x, lambda = 1600, iter = TRUE, test_type = "none",
   sig_p = 0.05, Max_Iter = 100)
@@ -10,12 +10,6 @@ BoostedHP(x, lambda = 1600, iter = TRUE, test_type = "none",
 \arguments{
 \item{Max_Iter}{}
 }
-\value{
-cycle,trend_hist,iter_num,IC_hist,adf_p_hist.
-}
 \description{
-one in all function of iterated HP-filter
-}
-\examples{
-bx_HP = BoostedHP(x, lambda = 1600, iter= FALSE)$trend
+Title
 }
