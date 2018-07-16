@@ -2,14 +2,30 @@
 % Please edit documentation in R/BoostedHP.R
 \name{BoostedHP}
 \alias{BoostedHP}
-\title{Title}
+\title{all in one function of iterated HP-filter}
 \usage{
 BoostedHP(x, lambda = 1600, iter = TRUE, test_type = "none",
   sig_p = 0.05, Max_Iter = 100)
 }
 \arguments{
-\item{Max_Iter}{}
+\item{x}{the data you want to conduct HP-filter}
+
+\item{lambda}{the turning parameter}
+
+\item{test_type}{the type for creterion}
+
+\item{sig_p}{significant p-value}
+
+\item{Max_Iter}{maximum iterated time}
+}
+\value{
+cycle component, iterated number, p-value .
 }
 \description{
-Title
+all in one function of iterated HP-filter
+}
+\examples{
+lam = 100 # tuning parameter for the annaul data
+bx_HP = BoostedHP(x, lambda = lam, iter= FALSE)$trend
+
 }

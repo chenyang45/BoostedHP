@@ -5,43 +5,49 @@
 # R version 3.4.3 (2017-11-30) -- "Kite-Eating Tree"
 # Copyright (C) 2017 The R Foundation for Statistical Computing
 # Platform: x86_64-w64-mingw32/x64 (64-bit)
-# Date: 2018-07-15
+# Date: 2018-04-22
 # by Zhentao Shi, zhentao.shi@cuhk.edu.hk
 #    Chen Yang,   chen_yang@link.cuhk.edu.hk
 #
 # ===============================================================
 #
-# Version 0.5 fixed the location of text message
-# revised date:2018-16-07
+# Version 5.0
+#
+# You can learn more about package authoring with RStudio at:
+#
+#   http://r-pkgs.had.co.nz/
+#
+# Some useful keyboard shortcuts for package authoring:
+#
+#   Build and Reload Package:  'Ctrl + Shift + B'
+#   Check Package:             'Ctrl + Shift + E'
+#   Test Package:              'Ctrl + Shift + T'
 
 
 
-#' Iterated HP-filter Conduction
+#' all in one function of iterated HP-filter
 #'
-#' @param x
-#' @param lambda
+#' @param x the data you want to conduct HP-filter
+#' @param lambda the turning parameter
 #' @param iter
-#' @param test_type
-#' @param sig_p
-#' @param Max_Iter
+#' @param test_type the type for creterion
+#' @param sig_p significant p-value
+#' @param Max_Iter maximum iterated time
 #'
-#' @return
+#' @return cycle component, iterated number, p-value .
 #' @export
 #'
-#' @examples
-#' lam = 100 # tuning parameter for the annual data
+#' @examples lam = 100 # tuning parameter for the annaul data
+#' bx_HP = BoostedHP(x, lambda = lam, iter= FALSE)$trend
 #'
-#' bx_HP = BoostedHP(IRE, lambda = lam, iter= FALSE) # raw HP filter
-#'
-#' bx_ADF = BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf", sig_p = 0.050)
-#'
+
+library(tseries)
+library(expm)
 BoostedHP = function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0.050, Max_Iter = 100) {
 
 
-
   # Require Package: tseries, expm
-  library(tseries)
-  library(expm)
+
   # Inputs
   #   x: a univariate time series
   #   lambda: the tuning parameter in the HP filter (base learner). Default is 1600.
