@@ -4,9 +4,9 @@ packages for Peter Phillips and Zhentao Shi (2018): "Boosting the Hodrick-Presco
 
 # 
 
-Version : 1.0
+Version : 2.0
 
-2018-07-10 
+2018-07-17 
 
 ## Introduction
 
@@ -35,7 +35,7 @@ The package is in progress and far from mature.
 
 #### Example
 ```
-load("Ireland_GDP.RData") # Ireland Annual GDP example in the paper
+data("IRE") # Ireland Annual GDP example in the paper, which is saved in the package.
 
 lam = 100 # tuning parameter for the annaul data
 
