@@ -23,13 +23,11 @@
 #   Check Package:             'Ctrl + Shift + E'
 #   Test Package:              'Ctrl + Shift + T'
 
-
-
 #' all in one function of iterated HP-filter
 #'
 #' @param x the data you want to conduct HP-filter
 #' @param lambda the turning parameter
-#' @param iter
+#' @param iter logical parameter, TRUE is to conduct iterated HP-filter, FALSE is not
 #' @param test_type the type for creterion
 #' @param sig_p significant p-value
 #' @param Max_Iter maximum iterated time
@@ -37,9 +35,21 @@
 #' @return cycle component, iterated number, p-value .
 #' @export
 #'
-#' @examples lam = 100 # tuning parameter for the annaul data
-#' bx_HP = BoostedHP(x, lambda = lam, iter= FALSE)$trend
+#' @examples lam <- 100 # tuning parameter for the annaul data
 #'
+#' # raw HP filter
+#' bx_HP <- BoostedHP(x, lambda = lam, iter= FALSE)$trend
+#'
+#' # by BIC
+#' bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "BIC")
+#'
+#' # by ADF
+#' bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf", sig_p = 0.050)
+#'
+#' # summarize the outcome
+#' outcome <- cbind(IRE, bx_HP$trend, bx_BIC$trend, bx_ADF$trend)
+#'
+#' matplot(outcome, type = "l", ylab = "", lwd = rep(2,4))
 
 
 BoostedHP = function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0.050, Max_Iter = 100) {
@@ -48,6 +58,8 @@ BoostedHP = function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0
   # Require Package: tseries, expm
   library(tseries)
   library(expm)
+  # Require Package: tseries, expm
+
   # Inputs
   #   x: a univariate time series
   #   lambda: the tuning parameter in the HP filter (base learner). Default is 1600.
@@ -111,12 +123,22 @@ BoostedHP = function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0
 
   ## the boosted HP filter
 
+
   if(iter==TRUE) {
+
+
+    if (test_type == "adf"){
+      message("iterated HP filter with ADF test criterion")
+    } else if ( test_type == "BIC"){
+      message( "iterated HP filter with BIC criterion")
+    }  else if ( test_type == "none" ) {
+      message( "iterated HP filter until Max_Iter")
+    }
+
 
 
     ### ADF test as the stopping criterion
     if (test_type =="adf"  ) {
-      message("iterated HP filter with ADF test criterion")
 
       r <- 1
       stationary <- FALSE
@@ -186,17 +208,15 @@ BoostedHP = function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0
 
           I_S_r = I_S_0 %*% I_S_r # update for the next round
 
-          if (  test_type == "BIC") {
-            if  (r >= 2) {
-              if (  IC[r-1] < IC[r] )   {
-                break;
-                message( "iterated HP filter with BIC criterion")
-              }
-            } else {
-              message( "iterated HP filter until Max_Iter")}
-          } # end of the type judgement
+          if  ( (r >= 2) & (  test_type == "BIC") )  {
+            if (  IC[r-1] < IC[r] )   { break  }
+          }
 
         } # end of the while loop
+
+        # the message
+
+
 
         # final assignment
         R = r - 1;
@@ -207,8 +227,6 @@ BoostedHP = function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0
         result <- list( cycle = x_c, trend_hist = x_f,  test_type = test_type,
                         IC_hist = IC, iter_num = R, trend =  x- x_c  )
       }
-
-    # end of the BIC judgement
 
   } # end the boosted HP
 
