@@ -2,8 +2,6 @@
 
 R package for Peter Phillips and Zhentao Shi (2018): "Boosting the Hodrick-Prescott Filter"
 
-# 
-
 version : 0.5.0
 
 2018-07-17 
