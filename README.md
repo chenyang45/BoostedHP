@@ -4,9 +4,9 @@ R package for Peter Phillips and Zhentao Shi (2018): "Boosting the Hodrick-Presc
 
 # 
 
-Version : 0.5
+version : 0.5.0
 
-2018-07-10 
+2018-07-17 
 
 ## Introduction
 
@@ -33,7 +33,7 @@ The package is in progress.
 
 #### Example
 ```
-load("Ireland_GDP.RData") # Ireland Annual GDP example in the paper
+data("IRE") # Ireland Annual GDP example in the paper, which is saved in the package.
 
 lam = 100 # tuning parameter for the annual data
 

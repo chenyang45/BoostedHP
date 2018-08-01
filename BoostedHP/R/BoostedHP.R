@@ -11,7 +11,7 @@
 #
 # ===============================================================
 #
-# Version 1.0
+# Version 5.0
 #
 # You can learn more about package authoring with RStudio at:
 #
@@ -23,25 +23,41 @@
 #   Check Package:             'Ctrl + Shift + E'
 #   Test Package:              'Ctrl + Shift + T'
 
-library(tseries)
-library(expm)
-
-#' one in all function of iterated HP-filter
+#' all in one function of iterated HP-filter
 #'
-#' @param x
-#' @param lambda
-#' @param iter
-#' @param test_type
-#' @param sig_p
-#' @param Max_Iter
+#' @param x the data you want to conduct HP-filter
+#' @param lambda the turning parameter
+#' @param iter logical parameter, TRUE is to conduct iterated HP-filter, FALSE is not
+#' @param test_type the type for creterion
+#' @param sig_p significant p-value
+#' @param Max_Iter maximum iterated time
 #'
-#' @return cycle,trend_hist,iter_num,IC_hist,adf_p_hist.
+#' @return cycle component, iterated number, p-value .
 #' @export
 #'
-#' @examples bx_HP = BoostedHP(x, lambda = 1600, iter= FALSE)$trend
-BoostedHP <- function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0.050, Max_Iter = 100) {
+#' @examples lam <- 100 # tuning parameter for the annaul data
+#'
+#' # raw HP filter
+#' bx_HP <- BoostedHP(x, lambda = lam, iter= FALSE)$trend
+#'
+#' # by BIC
+#' bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "BIC")
+#'
+#' # by ADF
+#' bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf", sig_p = 0.050)
+#'
+#' # summarize the outcome
+#' outcome <- cbind(IRE, bx_HP$trend, bx_BIC$trend, bx_ADF$trend)
+#'
+#' matplot(outcome, type = "l", ylab = "", lwd = rep(2,4))
 
 
+BoostedHP = function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0.050, Max_Iter = 100) {
+
+
+  # Require Package: tseries, expm
+  library(tseries)
+  library(expm)
   # Require Package: tseries, expm
 
   # Inputs
@@ -59,6 +75,7 @@ BoostedHP <- function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 
 
   # Outputs
   #   $cycle: the cyclical components in the final round
+  #   $trend: the trend component in the final round
   #   $trend_hist: the estimated trend in each iteration
   #   $iter_num: the total number of iterations
   #   $IC_hist: the path of the information criterion along the iterations
@@ -106,12 +123,22 @@ BoostedHP <- function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 
 
   ## the boosted HP filter
 
+
   if(iter==TRUE) {
 
 
+    if (test_type == "adf"){
+      message("iterated HP filter with ADF test criterion")
+    } else if ( test_type == "BIC"){
+      message( "iterated HP filter with BIC criterion")
+    }  else if ( test_type == "none" ) {
+      message( "iterated HP filter until Max_Iter")
+    }
+
+
+
     ### ADF test as the stopping criterion
-    if(test_type =="adf"  ) {
-      message("iterated HP filter with ",test_type," test criterion")
+    if (test_type =="adf"  ) {
 
       r <- 1
       stationary <- FALSE
@@ -130,9 +157,6 @@ BoostedHP <- function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 
         # we use the critical value for the ADF distribution with
         # the intercept and linear trend specification
 
-        # adf_p_r =  ur.df( x_c, type = "none",  lags = 1); #  trunc((length(x_c)-1)^(1/3) ) )
-        # adf_p_r = 0.06 * ( adf_p_r@teststat > - 2.6 )
-        # adf_p_r = unitrootTest(x_c, type = "nc", lags = trunc((length(x_c)-1)^(1/3) )  )@test$p.value
         adf_p[r] <- adf_p_r
 
         sig_p = sig_p # + 0.001 # due to the way that R reports the p-value
@@ -159,12 +183,7 @@ BoostedHP <- function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 
       result <- list( cycle = x_c, trend_hist = x_f,  test_type = test_type,
                       adf_p_hist= adf_p, iter_num = R,
                       trend  = x - x_c)
-      } else {
-
-
-
-        ### compute BIC
-        message( paste0("iterated HP filter with ", test_type, " criterion") )
+      } else  {
 
         # assignment
         r <- 0
@@ -180,8 +199,6 @@ BoostedHP <- function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 
 
 
         while( r < Max_Iter ) {
-          # while r CAN not be <= Max_Iter because the following command r <- r+1, it will produce out of bound of script error
-
           r <- r + 1
 
           x_c_r = I_S_r %*% x  # this is the cyclical component after m iterations
@@ -191,27 +208,26 @@ BoostedHP <- function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 
 
           I_S_r = I_S_0 %*% I_S_r # update for the next round
 
-          # the BIC stopping criterion
-          if(  test_type == "BIC"){
-            if (r >= 2) {  IC_decrease = ( IC[r] <= IC[r-1] )  }
-            if (IC_decrease == FALSE)       {break}
+          if  ( (r >= 2) & (  test_type == "BIC") )  {
+            if (  IC[r-1] < IC[r] )   { break  }
           }
-          # else test_type = "none", keep iteration until Max_Iter
 
         } # end of the while loop
+
+        # the message
+
 
 
         # final assignment
         R = r - 1;
         x_f <- as.matrix(x_f[, 1:R])
         x_c <- x - x_f[,R]
-
-        #if ( r == Max_Iter)
-
+        # browser()
 
         result <- list( cycle = x_c, trend_hist = x_f,  test_type = test_type,
-                        IC_hist = IC, iter_num = R, trend = x - x_c  )
+                        IC_hist = IC, iter_num = R, trend =  x- x_c  )
       }
+
   } # end the boosted HP
 
   return(result)

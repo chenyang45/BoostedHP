@@ -2,20 +2,44 @@
 % Please edit documentation in R/BoostedHP.R
 \name{BoostedHP}
 \alias{BoostedHP}
-\title{one in all function of iterated HP-filter}
+\title{all in one function of iterated HP-filter}
 \usage{
 BoostedHP(x, lambda = 1600, iter = TRUE, test_type = "none",
   sig_p = 0.05, Max_Iter = 100)
 }
 \arguments{
-\item{Max_Iter}{}
+\item{x}{the data you want to conduct HP-filter}
+
+\item{lambda}{the turning parameter}
+
+\item{iter}{logical parameter, TRUE is to conduct iterated HP-filter, FALSE is not}
+
+\item{test_type}{the type for creterion}
+
+\item{sig_p}{significant p-value}
+
+\item{Max_Iter}{maximum iterated time}
 }
 \value{
-cycle,trend_hist,iter_num,IC_hist,adf_p_hist.
+cycle component, iterated number, p-value .
 }
 \description{
-one in all function of iterated HP-filter
+all in one function of iterated HP-filter
 }
 \examples{
-bx_HP = BoostedHP(x, lambda = 1600, iter= FALSE)$trend
+lam <- 100 # tuning parameter for the annaul data
+
+# raw HP filter
+bx_HP <- BoostedHP(x, lambda = lam, iter= FALSE)$trend
+
+# by BIC
+bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "BIC")
+
+# by ADF
+bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf", sig_p = 0.050)
+
+# summarize the outcome
+outcome <- cbind(IRE, bx_HP$trend, bx_BIC$trend, bx_ADF$trend)
+
+matplot(outcome, type = "l", ylab = "", lwd = rep(2,4))
 }
