@@ -15,4 +15,5 @@
 8.Find a method to track the path of the p-value of ADF or the value of BIC.
 
 
-
+https://cran.r-project.org/doc/manuals/R-exts.html#Package-Dependencies
+solve the packages inter-dependency
