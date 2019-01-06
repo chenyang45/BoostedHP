@@ -17,3 +17,5 @@
 
 https://cran.r-project.org/doc/manuals/R-exts.html#Package-Dependencies
 solve the packages inter-dependency
+
+use "roxygen2" to document functions
