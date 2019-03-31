@@ -35,7 +35,7 @@ Error in read.dcf(path) :
 The problem comes from your new version of package "devtools" (2.0.1), just install the old version of package "devtools" (eg: 1.13.6) and the problem will be solved.
 We provide the whole files of old version package "devtools"(version 1.13.6) in this repo, feel free to download and install it manually. 
 
-Before installation, we also suggest you to install package "tseries" and "exmp" first.
+Before installation, we also suggest you to install package "tseries" and "exmp" first cause sometimes the Internet speed is such low and when you install the three package at the same the procesure may be fail.
 
 The package is in progress.
 
