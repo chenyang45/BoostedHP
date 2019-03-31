@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Attempts to install a package from CRAN.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for install_cran {devtools}"><tr><td>install_cran {devtools}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Attempts to install a package from CRAN.</h2>
+
+<h3>Description</h3>
+
+<p>This function is vectorised on <code>pkgs</code> so you can install multiple
+packages in a single command.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+install_cran(pkgs, repos = getOption("repos"), type = getOption("pkgType"),
+  ..., quiet = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>pkgs</code></td>
+<td>
+<p>Character vector of packages to install.</p>
+</td></tr>
+<tr valign="top"><td><code>repos</code></td>
+<td>
+<p>A character vector giving repositories to use.</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p>Type of package to <code>update</code>.  If &quot;both&quot;, will switch
+automatically to &quot;binary&quot; to avoid interactive prompts during package
+installation.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Additional arguments passed to <code>install_packages</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>quiet</code></td>
+<td>
+<p>If <code>TRUE</code>, suppress output.</p>
+</td></tr>
+</table>
+
+
+<h3>See Also</h3>
+
+<p>Other package installation: <code><a href="install_bioc.html">install_bioc</a></code>,
+<code><a href="install_bitbucket.html">install_bitbucket</a></code>,
+<code><a href="install_github.html">install_github</a></code>, <code><a href="install_git.html">install_git</a></code>,
+<code><a href="install_svn.html">install_svn</a></code>, <code><a href="install_url.html">install_url</a></code>,
+<code><a href="install_version.html">install_version</a></code>, <code><a href="install.html">install</a></code>,
+<code><a href="uninstall.html">uninstall</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Not run: 
+install_cran("ggplot2")
+install_cran(c("httpuv", "shiny")
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>devtools</em> version 1.13.6 <a href="00Index.html">Index</a>]</div>
+</body></html>

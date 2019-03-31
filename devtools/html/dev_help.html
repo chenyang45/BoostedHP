@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Read the in-development help for a package loaded with...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for dev_help {devtools}"><tr><td>dev_help {devtools}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Read the in-development help for a package loaded with devtools.</h2>
+
+<h3>Description</h3>
+
+<p>Note that this only renders a single documentation file, so that links
+to other files within the package won't work.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+dev_help(topic, stage = "render", type = getOption("help_type"))
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>topic</code></td>
+<td>
+<p>name of help to search for.</p>
+</td></tr>
+<tr valign="top"><td><code>stage</code></td>
+<td>
+<p>at which stage (&quot;build&quot;, &quot;install&quot;, or &quot;render&quot;) should
+\Sexpr macros be executed? This is only important if you're using
+\Sexpr macro's in your Rd files.</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p>of html to produce: <code>"html"</code> or <code>"text"</code>. Defaults to
+your default documentation type.</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Not run: 
+library("ggplot2")
+help("ggplot") # loads installed documentation for ggplot
+
+load_all("ggplot2")
+dev_help("ggplot") # loads development documentation for ggplot
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>devtools</em> version 1.13.6 <a href="00Index.html">Index</a>]</div>
+</body></html>

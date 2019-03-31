@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Run R CMD xxx from within R</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for RCMD {devtools}"><tr><td>RCMD {devtools}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Run R CMD xxx from within R</h2>
+
+<h3>Description</h3>
+
+<p>Run R CMD xxx from within R
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+RCMD(cmd, options, path = tempdir(), env_vars = character(), ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>cmd</code></td>
+<td>
+<p>one of the R tools available from the R CMD interface.</p>
+</td></tr>
+<tr valign="top"><td><code>options</code></td>
+<td>
+<p>a character vector of options to pass to the command</p>
+</td></tr>
+<tr valign="top"><td><code>path</code></td>
+<td>
+<p>the directory to run the command in.</p>
+</td></tr>
+<tr valign="top"><td><code>env_vars</code></td>
+<td>
+<p>environment variables to set before running the command.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>additional arguments passed to <code><a href="system_check.html">system_check</a></code></p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>TRUE</code> if the command succeeds, throws an error if the command
+fails.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>devtools</em> version 1.13.6 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Evaluate code in a clean R session.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for eval_clean {devtools}"><tr><td>eval_clean {devtools}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Evaluate code in a clean R session.</h2>
+
+<h3>Description</h3>
+
+<p>Evaluate code in a clean R session.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+eval_clean(expr, quiet = TRUE)
+
+evalq_clean(expr, quiet = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>expr</code></td>
+<td>
+<p>an R expression to evaluate. For <code>eval_clean</code> this should
+already be quoted. For <code>evalq_clean</code> it will be quoted for you.</p>
+</td></tr>
+<tr valign="top"><td><code>quiet</code></td>
+<td>
+<p>if <code>TRUE</code>, the default, only the final result and the
+any explicitly printed output will be displayed. If <code>FALSE</code>, all
+input and output will be displayed, as if you'd copied and paste the code.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>An invisible <code>TRUE</code> on success.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- 1
+y &lt;- 2
+ls()
+evalq_clean(ls())
+evalq_clean(ls(), FALSE)
+eval_clean(quote({
+  z &lt;- 1
+  ls()
+}))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>devtools</em> version 1.13.6 <a href="00Index.html">Index</a>]</div>
+</body></html>

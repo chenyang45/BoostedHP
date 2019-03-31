@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Find all dependencies of a CRAN or dev package.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for package_deps {devtools}"><tr><td>package_deps {devtools}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Find all dependencies of a CRAN or dev package.</h2>
+
+<h3>Description</h3>
+
+<p>Find all the dependencies of a package and determine whether they are ahead
+or behind CRAN. A <code>print()</code> method identifies mismatches (if any)
+between local and CRAN versions of each dependent package; an
+<code>update()</code> method installs outdated or missing packages from CRAN.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+package_deps(pkg, dependencies = NA, repos = getOption("repos"),
+  type = getOption("pkgType"))
+
+dev_package_deps(pkg = ".", dependencies = NA, repos = getOption("repos"),
+  type = getOption("pkgType"), bioconductor = TRUE)
+
+## S3 method for class 'package_deps'
+update(object, ..., quiet = FALSE, upgrade = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>pkg</code></td>
+<td>
+<p>A character vector of package names. If missing, defaults to
+the name of the package in the current directory.</p>
+</td></tr>
+<tr valign="top"><td><code>dependencies</code></td>
+<td>
+<p>Which dependencies do you want to check?
+Can be a character vector (selecting from &quot;Depends&quot;, &quot;Imports&quot;,
+&quot;LinkingTo&quot;, &quot;Suggests&quot;, or &quot;Enhances&quot;), or a logical vector.
+</p>
+<p><code>TRUE</code> is shorthand for &quot;Depends&quot;, &quot;Imports&quot;, &quot;LinkingTo&quot; and
+&quot;Suggests&quot;. <code>NA</code> is shorthand for &quot;Depends&quot;, &quot;Imports&quot; and &quot;LinkingTo&quot;
+and is the default. <code>FALSE</code> is shorthand for no dependencies (i.e.
+just check this package, not its dependencies).</p>
+</td></tr>
+<tr valign="top"><td><code>repos</code></td>
+<td>
+<p>A character vector giving repositories to use.</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p>Type of package to <code>update</code>.  If &quot;both&quot;, will switch
+automatically to &quot;binary&quot; to avoid interactive prompts during package
+installation.</p>
+</td></tr>
+<tr valign="top"><td><code>bioconductor</code></td>
+<td>
+<p>Install Bioconductor dependencies if the package has a
+BiocViews field in the DESCRIPTION.</p>
+</td></tr>
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>A <code>package_deps</code> object.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Additional arguments passed to <code>install_packages</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>quiet</code></td>
+<td>
+<p>If <code>TRUE</code>, suppress output.</p>
+</td></tr>
+<tr valign="top"><td><code>upgrade</code></td>
+<td>
+<p>If <code>TRUE</code>, also upgrade any of out date dependencies.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A <code>data.frame</code> with columns:
+</p>
+
+<table summary="Rd table">
+<tr>
+ <td style="text-align: left;">
+<code>package</code> </td><td style="text-align: left;"> The dependent package's name,</td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+<code>installed</code> </td><td style="text-align: left;"> The currently installed version,</td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+<code>available</code> </td><td style="text-align: left;"> The version available on CRAN,</td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+<code>diff</code> </td><td style="text-align: left;"> An integer denoting whether the locally installed version
+  of the package is newer (1), the same (0) or older (-1) than the version
+  currently available on CRAN.</td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+</td>
+</tr>
+
+</table>
+
+
+
+<h3>Examples</h3>
+
+<pre>
+## Not run: 
+package_deps("devtools")
+# Use update to update any out-of-date dependencies
+update(package_deps("devtools"))
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>devtools</em> version 1.13.6 <a href="00Index.html">Index</a>]</div>
+</body></html>

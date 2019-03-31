@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Build windows binary package.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for build_win {devtools}"><tr><td>build_win {devtools}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Build windows binary package.</h2>
+
+<h3>Description</h3>
+
+<p>This function works by bundling source package, and then uploading to
+<a href="http://win-builder.r-project.org/">http://win-builder.r-project.org/</a>.  Once building is complete you'll
+receive a link to the built package in the email address listed in the
+maintainer field.  It usually takes around 30 minutes. As a side effect,
+win-build also runs <code>R CMD check</code> on the package, so <code>build_win</code>
+is also useful to check that your package is ok on windows.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+build_win(pkg = ".", version = c("R-release", "R-devel"), args = NULL,
+  quiet = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>pkg</code></td>
+<td>
+<p>package description, can be path or package name.  See
+<code><a href="as.package.html">as.package</a></code> for more information</p>
+</td></tr>
+<tr valign="top"><td><code>version</code></td>
+<td>
+<p>directory to upload to on the win-builder, controlling
+which version of R is used to build the package. Possible options are
+listed on <a href="http://win-builder.r-project.org/">http://win-builder.r-project.org/</a>. Defaults to R-devel.</p>
+</td></tr>
+<tr valign="top"><td><code>args</code></td>
+<td>
+<p>An optional character vector of additional command
+line arguments to be passed to <code>R CMD build</code> if <code>binary = FALSE</code>,
+or <code>R CMD install</code> if <code>binary = TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>quiet</code></td>
+<td>
+<p>if <code>TRUE</code> suppresses output from this function.</p>
+</td></tr>
+</table>
+
+
+<h3>See Also</h3>
+
+<p>Other build functions: <code><a href="build.html">build</a></code>
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>devtools</em> version 1.13.6 <a href="00Index.html">Index</a>]</div>
+</body></html>

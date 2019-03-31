@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Attempts to install a package directly from GitHub.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for install_github {devtools}"><tr><td>install_github {devtools}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Attempts to install a package directly from GitHub.</h2>
+
+<h3>Description</h3>
+
+<p>This function is vectorised on <code>repo</code> so you can install multiple
+packages in a single command.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+install_github(repo, username = NULL, ref = "master", subdir = NULL,
+  auth_token = github_pat(quiet), host = "https://api.github.com",
+  quiet = FALSE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>repo</code></td>
+<td>
+<p>Repository address in the format
+<code>username/repo[/subdir][@ref|#pull]</code>. Alternatively, you can
+specify <code>subdir</code> and/or <code>ref</code> using the respective parameters
+(see below); if both are specified, the values in <code>repo</code> take
+precedence.</p>
+</td></tr>
+<tr valign="top"><td><code>username</code></td>
+<td>
+<p>User name. Deprecated: please include username in the
+<code>repo</code></p>
+</td></tr>
+<tr valign="top"><td><code>ref</code></td>
+<td>
+<p>Desired git reference. Could be a commit, tag, or branch
+name, or a call to <code><a href="github_refs.html">github_pull</a></code>. Defaults to <code>"master"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>subdir</code></td>
+<td>
+<p>subdirectory within repo that contains the R package.</p>
+</td></tr>
+<tr valign="top"><td><code>auth_token</code></td>
+<td>
+<p>To install from a private repo, generate a personal
+access token (PAT) in <a href="https://github.com/settings/tokens">https://github.com/settings/tokens</a> and
+supply to this argument. This is safer than using a password because
+you can easily delete a PAT without affecting any others. Defaults to
+the <code>GITHUB_PAT</code> environment variable.</p>
+</td></tr>
+<tr valign="top"><td><code>host</code></td>
+<td>
+<p>GitHub API host to use. Override with your GitHub enterprise
+hostname, for example, <code>"github.hostname.com/api/v3"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>quiet</code></td>
+<td>
+<p>if <code>TRUE</code> suppresses output from this function.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Other arguments passed on to <code><a href="install.html">install</a></code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Attempting to install from a source repository that uses submodules
+raises a warning. Because the zipped sources provided by GitHub do not
+include submodules, this may lead to unexpected behaviour or compilation
+failure in source packages. In this case, cloning the repository manually
+using <code><a href="install_git.html">install_git</a></code> with <code>args="--recursive"</code> may yield
+better results.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="github_refs.html">github_pull</a></code>
+</p>
+<p>Other package installation: <code><a href="install_bioc.html">install_bioc</a></code>,
+<code><a href="install_bitbucket.html">install_bitbucket</a></code>,
+<code><a href="install_cran.html">install_cran</a></code>, <code><a href="install_git.html">install_git</a></code>,
+<code><a href="install_svn.html">install_svn</a></code>, <code><a href="install_url.html">install_url</a></code>,
+<code><a href="install_version.html">install_version</a></code>, <code><a href="install.html">install</a></code>,
+<code><a href="uninstall.html">uninstall</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Not run: 
+install_github("klutometis/roxygen")
+install_github("wch/ggplot2")
+install_github(c("rstudio/httpuv", "rstudio/shiny"))
+install_github(c("hadley/httr@v0.4", "klutometis/roxygen#142",
+  "mfrasca/r-logging/pkg"))
+
+install_github("r-lib/devtools")
+
+# To install from a private repo, use auth_token with a token
+# from https://github.com/settings/tokens. You only need the
+# repo scope. Best practice is to save your PAT in env var called
+# GITHUB_PAT.
+install_github("hadley/private", auth_token = "abc")
+
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>devtools</em> version 1.13.6 <a href="00Index.html">Index</a>]</div>
+</body></html>

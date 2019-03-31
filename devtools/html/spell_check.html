@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Spell checking</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for spell_check {devtools}"><tr><td>spell_check {devtools}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Spell checking</h2>
+
+<h3>Description</h3>
+
+<p>Runs a spell check on text fields in the package description file and
+manual pages. Hunspell includes dictionaries for <code>en_US</code> and <code>en_GB</code>
+by default. Other languages require installation of a custom dictionary, see
+the <a href="https://cran.r-project.org/package=hunspell/vignettes/intro.html#system_dictionaries">hunspell vignette</a>
+for details.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+spell_check(pkg = ".", ignore = character(), dict = "en_US")
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>pkg</code></td>
+<td>
+<p>package description, can be path or package name.  See
+<code><a href="as.package.html">as.package</a></code> for more information</p>
+</td></tr>
+<tr valign="top"><td><code>ignore</code></td>
+<td>
+<p>character vector with words to ignore. See
+<code><a href="../../hunspell/html/hunspell.html">hunspell</a></code> for more information</p>
+</td></tr>
+<tr valign="top"><td><code>dict</code></td>
+<td>
+<p>a dictionary object or language string. See
+<code><a href="../../hunspell/html/hunspell.html">hunspell</a></code> for more information</p>
+</td></tr>
+</table>
+
+<hr /><div style="text-align: center;">[Package <em>devtools</em> version 1.13.6 <a href="00Index.html">Index</a>]</div>
+</body></html>

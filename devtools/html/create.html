@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Creates a new package, following all devtools package...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for create {devtools}"><tr><td>create {devtools}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Creates a new package, following all devtools package conventions.</h2>
+
+<h3>Description</h3>
+
+<p>Similar to <code><a href="../../utils/html/package.skeleton.html">package.skeleton</a></code>, except that it only creates
+the standard devtools directory structures; it doesn't try and create
+source code and data files by inspecting the global environment.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+create(path, description = getOption("devtools.desc"), check = FALSE,
+  rstudio = TRUE, quiet = FALSE)
+
+setup(path = ".", description = getOption("devtools.desc"), check = FALSE,
+  rstudio = TRUE, quiet = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>path</code></td>
+<td>
+<p>location to create new package.  The last component of the path
+will be used as the package name.</p>
+</td></tr>
+<tr valign="top"><td><code>description</code></td>
+<td>
+<p>list of description values to override default values or
+add additional values.</p>
+</td></tr>
+<tr valign="top"><td><code>check</code></td>
+<td>
+<p>if <code>TRUE</code>, will automatically run <code><a href="check.html">check</a></code></p>
+</td></tr>
+<tr valign="top"><td><code>rstudio</code></td>
+<td>
+<p>Create an RStudio project file?
+(with <code><a href="infrastructure.html">use_rstudio</a></code>)</p>
+</td></tr>
+<tr valign="top"><td><code>quiet</code></td>
+<td>
+<p>if <code>FALSE</code>, the default, prints informative messages.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>create</code> requires that the directory doesn't exist yet; it will be
+created but deleted upon failure. <code>setup</code> assumes an existing
+directory from which it will infer the package name.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Text with <code><a href="../../utils/html/package.skeleton.html">package.skeleton</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Not run: 
+# Create a package using all defaults:
+path &lt;- file.path(tempdir(), "myDefaultPackage")
+create(path)
+
+# Override a description attribute.
+path &lt;- file.path(tempdir(), "myCustomPackage")
+my_description &lt;- list("Maintainer" =
+  "'Yoni Ben-Meshulam' &lt;yoni@opower.com&gt;")
+create(path, my_description)
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>devtools</em> version 1.13.6 <a href="00Index.html">Index</a>]</div>
+</body></html>

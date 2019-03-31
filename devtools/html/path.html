@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Get/set the PATH variable.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for path {devtools}"><tr><td>path {devtools}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Get/set the PATH variable.</h2>
+
+<h3>Description</h3>
+
+<p>Get/set the PATH variable.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+get_path()
+
+set_path(path)
+
+add_path(path, after = Inf)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>path</code></td>
+<td>
+<p>character vector of paths</p>
+</td></tr>
+<tr valign="top"><td><code>after</code></td>
+<td>
+<p>for <code>add_path</code>, the place on the PATH where the new paths
+should be added</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>set_path</code> invisibly returns the old path.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../withr/html/with_path.html">with_path</a></code> to temporarily set the path for a block
+of code
+</p>
+<p>Other path: <code><a href="on_path.html">on_path</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+path &lt;- get_path()
+length(path)
+old &lt;- add_path(".")
+length(get_path())
+set_path(old)
+length(get_path())
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>devtools</em> version 1.13.6 <a href="00Index.html">Index</a>]</div>
+</body></html>

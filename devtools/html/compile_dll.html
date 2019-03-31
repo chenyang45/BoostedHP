@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Compile a .dll/.so from source.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for compile_dll {devtools}"><tr><td>compile_dll {devtools}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Compile a .dll/.so from source.</h2>
+
+<h3>Description</h3>
+
+<p><code>compile_dll</code> performs a fake R CMD install so code that
+works here should work with a regular install (and vice versa).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+compile_dll(pkg = ".", quiet = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>pkg</code></td>
+<td>
+<p>package description, can be path or package name.  See
+<code><a href="as.package.html">as.package</a></code> for more information</p>
+</td></tr>
+<tr valign="top"><td><code>quiet</code></td>
+<td>
+<p>if <code>TRUE</code> suppresses output from this function.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>During compilation, debug flags are set with
+<code><a href="compiler_flags.html">compiler_flags</a>(TRUE)</code>.
+</p>
+<p>Invisibly returns the names of the DLL.
+</p>
+
+
+<h3>Note</h3>
+
+<p>If this is used to compile code that uses Rcpp, you will need to
+add the following line to your <code>Makevars</code> file so that it
+knows where to find the Rcpp headers:
+<code>PKG_CPPFLAGS=`$(R_HOME)/bin/Rscript -e 'Rcpp:::CxxFlags()'`</code>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="clean_dll.html">clean_dll</a></code> to delete the compiled files.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>devtools</em> version 1.13.6 <a href="00Index.html">Index</a>]</div>
+</body></html>

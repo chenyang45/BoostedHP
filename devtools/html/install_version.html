@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Install specified version of a CRAN package.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for install_version {devtools}"><tr><td>install_version {devtools}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Install specified version of a CRAN package.</h2>
+
+<h3>Description</h3>
+
+<p>If you are installing an package that contains compiled code, you will
+need to have an R development environment installed.  You can check
+if you do by running <code><a href="has_devel.html">has_devel</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+install_version(package, version = NULL, repos = getOption("repos"),
+  type = getOption("pkgType"), ..., quiet = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>package</code></td>
+<td>
+<p>package name</p>
+</td></tr>
+<tr valign="top"><td><code>version</code></td>
+<td>
+<p>If the specified version is NULL or the same as the most
+recent version of the package, this function simply calls
+<code><a href="install.html">install</a></code>. Otherwise, it looks at the list of
+archived source tarballs and tries to install an older version instead.</p>
+</td></tr>
+<tr valign="top"><td><code>repos</code></td>
+<td>
+
+<p>character vector, the base URL(s) of the repositories
+to use, e.g., the URL of a CRAN mirror such as
+<code>"https://cloud.r-project.org"</code>.  For more details on
+supported URL schemes see <code><a href="../../base/html/connections.html">url</a></code>.
+</p>
+<p>Can be <code>NULL</code> to install from local files, directories or URLs:
+this will be inferred by extension from <code>pkgs</code> if of length one.
+</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p>character, indicating the type of package to download and
+install.  Will be <code>"source"</code> except on Windows and some macOS
+builds: see the section on &lsquo;Binary packages&rsquo; for those.
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Other arguments passed on to <code><a href="install.html">install</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>quiet</code></td>
+<td>
+
+<p>logical: if true, reduce the amount of output.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Jeremy Stephens
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other package installation: <code><a href="install_bioc.html">install_bioc</a></code>,
+<code><a href="install_bitbucket.html">install_bitbucket</a></code>,
+<code><a href="install_cran.html">install_cran</a></code>, <code><a href="install_github.html">install_github</a></code>,
+<code><a href="install_git.html">install_git</a></code>, <code><a href="install_svn.html">install_svn</a></code>,
+<code><a href="install_url.html">install_url</a></code>, <code><a href="install.html">install</a></code>,
+<code><a href="uninstall.html">uninstall</a></code>
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>devtools</em> version 1.13.6 <a href="00Index.html">Index</a>]</div>
+</body></html>
