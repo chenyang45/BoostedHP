@@ -2,7 +2,7 @@
 
 R package for Peter Phillips and Zhentao Shi (2018): "Boosting the Hodrick-Prescott Filter"
 
-version : 0.5.0
+version : 0.0.3
 
 2018-07-17 
 
@@ -27,6 +27,16 @@ install.packages("devtools")
 devtools::install_github("chenyang45/BoostedHP/BoostedHP")
 library("BoostedHP")
 ```
+Note: If you have problem while installing the package with the error message :
+```
+Error in read.dcf(path) : 
+  Found continuation line starting '    tseries, ...' at begin of record.
+```
+The problem comes from your new version of package "devtools" (2.0.1), just install the old version of package "devtools" (eg: 1.13.6) and the problem will be solved.
+We provide the whole files of old version package "devtools"(version 1.13.6) in this repo, feel free to download and install it manually. 
+
+Before installation, we also suggest you to install package "tseries" and "exmp" first.
+
 The package is in progress.
 
 #### Example
