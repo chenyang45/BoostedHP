@@ -1,4 +1,4 @@
-# Project of BoostedHP Package   ![image](https://github.com/chenyang45/A_N/blob/master/graph/gganimation/preview.gif)
+# Project of BoostedHP Package   ![image](https://github.com/chenyang45/BoostedHP/blob/master/preview.gif)
 
 R package for Peter Phillips and Zhentao Shi (2018): "Boosting the Hodrick-Prescott Filter"
 
