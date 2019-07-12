@@ -1,27 +1,14 @@
-# Project of BoostedHP Package   ![image](https://github.com/chenyang45/BoostedHP/blob/master/preview.gif)
+# Boosted Hodrick-Prescott Filter
 
-R package for Peter Phillips and Zhentao Shi (2018): "Boosting the Hodrick-Prescott Filter"
+This is an R package for Peter Phillips and Zhentao Shi (2019): ["Boosting the Hodrick-Prescott Filter"](https://arxiv.org/abs/1905.00175). The method is implemented by the function `BoostedHP()`. 
 
 version : 0.0.3
 
-2018-07-17 
 
-## Introduction
-
-This is an accompanying repository for the paper:
-
-Peter Phillips and Zhentao Shi (2018): "Boosting the Hodrick-Prescott Filter" (to provide the arxiv link)
-
-The main function is: 
-
-* `BoostedHP.R` contains the R function to implement the automated boosted HP filter.
-The inputs and outputs are detailed in the beginning of the function.
-
-Comments are welcome. 
 
 #### Installation
 
-A very preliminary R package can be installed by running in `R`
+A preliminary R package can be installed by running in `R`
 ```
 install.packages("devtools")
 devtools::install_github("chenyang45/BoostedHP/BoostedHP")
