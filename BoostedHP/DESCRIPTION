@@ -9,6 +9,5 @@ License: MIT
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    tseries,
-    expm
+    tseries,expm,stargazer,animation,plotly,magrittr
 RoxygenNote: 6.1.1
