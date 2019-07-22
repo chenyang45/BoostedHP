@@ -39,7 +39,10 @@
 #' @return cycle component, trend component, raw data, iterated number, p-value or BIC.
 #' @export
 #'
-#' @examples lam <- 100 # tuning parameter for the annaul data
+#' @examples
+#' library(tseries)
+#'
+#' lam <- 100 # tuning parameter for the annaul data
 #'
 #' data(IRE) # laod the data 'IRE'
 #'

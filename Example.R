@@ -24,6 +24,8 @@ library(BoostedHP)
 
 ?BoostedHP
 
+library(tseries)
+
 lam <- 100 # tuning parameter for the annaul data
 
 data(IRE) # laod the data 'IRE'

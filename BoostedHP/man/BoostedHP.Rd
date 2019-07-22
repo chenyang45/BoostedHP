@@ -27,6 +27,8 @@ cycle component, trend component, raw data, iterated number, p-value or BIC.
 all in one function of conducting iterated HP-filter for types: none-iter, adf, BIC, none.
 }
 \examples{
+library(tseries)
+
 lam <- 100 # tuning parameter for the annaul data
 
 data(IRE) # laod the data 'IRE'
