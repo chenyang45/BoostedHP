@@ -57,13 +57,13 @@
 #' # change the color
 #' plot(bx_ADF,main = "dynamic graph with new color",col_raw = "#685F74", col_trend_h = "#39A1A8", col_trend_f = "#DD4B4F", col_pvalue_BIC = "#E96145")
 #'
-# change the trancparency
+#' # change the trancparency
 #' plot(bx_ADF,main = "dynamic graph with new trancparency setting",raw_alpha = 200, trend_h_alpha = 55, trend_f_alpha = 250, pvalue_BIC_alpha = 250)
 #'
-# Note: 'none' bHP doesn't have dynamic figure
+#' # Note: 'none' bHP doesn't have dynamic figure
 #' plot(bx_HP)
-#  Error in plot.bHP(bx_HP) :
-#'none-iter' bHP doesn't have dynamic picture: returning NA
+#' # Error in plot.bHP(bx_HP) :
+#' #'none-iter' bHP doesn't have dynamic picture: returning NA
 #'
 #' #--------- for JS style ----------
 #'
