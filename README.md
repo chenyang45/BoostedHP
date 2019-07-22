@@ -31,6 +31,13 @@ install.packages("devtools")
 devtools::install_github("chenyang45/BoostedHP/BoostedHP")
 library("BoostedHP")
 ```
+
+# Important
+
+To make sure robust installation, delete your package "curl" document in your R lib for updated install during the install_github() process.
+
+
+
 Note: If you have problem while installing the package with the error message :
 ```
 Error in read.dcf(path) : 
