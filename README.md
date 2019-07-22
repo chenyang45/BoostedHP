@@ -19,6 +19,10 @@ The inputs and outputs are detailed in the beginning of the function.
 
 Comments are welcome. 
 
+
+![image](https://github.com/chenyang45/BoostedHP/blob/master/ADF_bHP_ani.gif)
+
+
 #### Installation
 
 A very preliminary R package can be installed by running in `R`
