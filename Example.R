@@ -12,8 +12,13 @@
 
 # install package 'BoostedHp'
 
+devtools::install_github("chenyang45/BoostedHP/BoostedHP")
 
+# or
 
+devtools::install_github("chenyang45/BoostedHP/BoostedHP", INSTALL_opts=c("--no-multiarch"))
+
+library(BoostedHP)
 
 # conduct the HP-filter and produce object bHP
 
