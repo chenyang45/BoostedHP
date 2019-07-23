@@ -1,44 +1,31 @@
-# Boosted Hodrick-Prescott Filter
+#===================================================================================
+#R version 3.5.1 (2018-07-02) -- "Feather Spray"
+#Copyright (C) 2018 The R Foundation for Statistical Computing
+#Platform: x86_64-w64-mingw32/x64 (64-bit)
+#===================================================================================
+# example of package 'BoostedHP'
+#===================================================================================
+# Date: 2019-07-23
+#===================================================================================
+# By Chen Yang: chen_yang@link.cuhk.edu.hk
+#===================================================================================
 
-This is an R package for Peter Phillips and Zhentao Shi (2019): ["Boosting the Hodrick-Prescott Filter"](https://arxiv.org/abs/1905.00175). The method is implemented by the function `BoostedHP()`. 
+# install package 'BoostedHp'
 
-version : 0.0.3
-
-
-
-
-![image](https://github.com/chenyang45/BoostedHP/blob/master/ADF_bHP_ani.gif)
-
-
-#### Installation
-
-A preliminary R package can be installed by running in `R`
-```
-install.packages("devtools")
 devtools::install_github("chenyang45/BoostedHP/BoostedHP")
-library("BoostedHP")
-```
 
-# Important
+# or
 
-To make sure robust installation, delete your package "curl" document in your R lib for updated install during the install_github() process.
+devtools::install_github("chenyang45/BoostedHP/BoostedHP", INSTALL_opts=c("--no-multiarch"))
 
+library(BoostedHP)
 
+# conduct the HP-filter and produce object bHP
 
-Note: If you have problem while installing the package with the error message :
-```
-Error in read.dcf(path) : 
-  Found continuation line starting '    tseries, ...' at begin of record.
-```
-The problem may comes from your new version of package "devtools" (2.0.1), just install the old version of package "devtools" (eg: 1.13.6) and the problem will be solved.
-We provide the whole files of old version package "devtools"(version 1.13.6) in this repo, feel free to download and install it manually. 
+?BoostedHP
 
-Before installation, we also suggest you to install package "tseries" and "exmp" first cause sometimes the Internet speed is such low and when you install the three package at the same the procesure may be fail.
+library(tseries)
 
-The package is in progress.
-
-#### Example
-```
 lam <- 100 # tuning parameter for the annaul data
 
 data(IRE) # laod the data 'IRE'
@@ -234,6 +221,4 @@ Pvalue(bx_BIC)
 Pvalue(bx_none)
 
 #Error in Pvalue.bHP(bx_none) : The stationary test type is none, not ADF.
-
-```
 

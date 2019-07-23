@@ -2,44 +2,50 @@
 % Please edit documentation in R/BoostedHP.R
 \name{BoostedHP}
 \alias{BoostedHP}
-\title{all in one function of iterated HP-filter}
+\title{Boosting the Hodrick-Prescott Filter}
 \usage{
 BoostedHP(x, lambda = 1600, iter = TRUE, test_type = "none",
   sig_p = 0.05, Max_Iter = 100)
 }
 \arguments{
-\item{x}{the data you want to conduct HP-filter}
+\item{x}{an object of class "bHP"}
 
-\item{lambda}{the turning parameter}
+\item{lambda}{the turning parameter, default value is 1600.}
 
-\item{iter}{logical parameter, TRUE is to conduct iterated HP-filter, FALSE is not}
+\item{iter}{logical parameter, TRUE (default) is to conduct iterated HP-filter, FALSE is not.}
 
-\item{test_type}{the type for creterion}
+\item{test_type}{the type for creterion: none-iter, adf, BIC, none (default).}
 
-\item{sig_p}{significant p-value}
+\item{sig_p}{significant p-value, default value is 0.050.}
 
-\item{Max_Iter}{maximum iterated time}
+\item{Max_Iter}{maximum iterated time, default value is 100.}
 }
 \value{
-cycle component, iterated number, p-value .
+cycle component, trend component, raw data, iterated number, p-value or BIC.
 }
 \description{
-all in one function of iterated HP-filter
+all in one function of conducting iterated HP-filter for types: none-iter, adf, BIC, none.
 }
 \examples{
+library(tseries)
+
 lam <- 100 # tuning parameter for the annaul data
 
+data(IRE) # laod the data 'IRE'
+
 # raw HP filter
-bx_HP <- BoostedHP(x, lambda = lam, iter= FALSE)$trend
+bx_HP <- BoostedHP(IRE, lambda = lam, iter= FALSE)
 
 # by BIC
 bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "BIC")
 
 # by ADF
-bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf", sig_p = 0.050)
+bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf")
 
-# summarize the outcome
-outcome <- cbind(IRE, bx_HP$trend, bx_BIC$trend, bx_ADF$trend)
+# by none test type
+# Iterated HP filter until Max_Iter and keep the path of BIC.
 
-matplot(outcome, type = "l", ylab = "", lwd = rep(2,4))
+bx_none <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "none")
+
+
 }

@@ -11,7 +11,7 @@
 #
 # ===============================================================
 #
-# Version 5.0
+# Version 0.0.5
 #
 # You can learn more about package authoring with RStudio at:
 #
@@ -23,43 +23,51 @@
 #   Check Package:             'Ctrl + Shift + E'
 #   Test Package:              'Ctrl + Shift + T'
 
-#' all in one function of iterated HP-filter
+
+
+#' Boosting the Hodrick-Prescott Filter
 #'
-#' @param x the data you want to conduct HP-filter
-#' @param lambda the turning parameter
-#' @param iter logical parameter, TRUE is to conduct iterated HP-filter, FALSE is not
-#' @param test_type the type for creterion
-#' @param sig_p significant p-value
-#' @param Max_Iter maximum iterated time
+#' all in one function of conducting iterated HP-filter for types: none-iter, adf, BIC, none.
 #'
-#' @return cycle component, iterated number, p-value .
+#' @param x an object of class "bHP"
+#' @param lambda the turning parameter, default value is 1600.
+#' @param iter logical parameter, TRUE (default) is to conduct iterated HP-filter, FALSE is not.
+#' @param test_type the type for creterion: none-iter, adf, BIC, none (default).
+#' @param sig_p significant p-value, default value is 0.050.
+#' @param Max_Iter maximum iterated time, default value is 100.
+#'
+#' @return cycle component, trend component, raw data, iterated number, p-value or BIC.
 #' @export
 #'
-#' @examples lam <- 100 # tuning parameter for the annaul data
+#' @examples
+#' library(tseries)
+#'
+#' lam <- 100 # tuning parameter for the annaul data
+#'
+#' data(IRE) # laod the data 'IRE'
 #'
 #' # raw HP filter
-#' bx_HP <- BoostedHP(x, lambda = lam, iter= FALSE)$trend
+#' bx_HP <- BoostedHP(IRE, lambda = lam, iter= FALSE)
 #'
 #' # by BIC
 #' bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "BIC")
 #'
 #' # by ADF
-#' bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf", sig_p = 0.050)
+#' bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf")
 #'
-#' # summarize the outcome
-#' outcome <- cbind(IRE, bx_HP$trend, bx_BIC$trend, bx_ADF$trend)
+#' # by none test type
+#' # Iterated HP filter until Max_Iter and keep the path of BIC.
 #'
-#' matplot(outcome, type = "l", ylab = "", lwd = rep(2,4))
+#' bx_none <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "none")
+#'
+#'
 
 
-BoostedHP = function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0.050, Max_Iter = 100) {
+BoostedHP <- function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0.050, Max_Iter = 100) {
 
 
   # Require Package: tseries, expm
-  library(tseries)
-  library(expm)
-  # Require Package: tseries, expm
-
+  #--------------------------------------------------------------------------------------
   # Inputs
   #   x: a univariate time series
   #   lambda: the tuning parameter in the HP filter (base learner). Default is 1600.
@@ -67,12 +75,12 @@ BoostedHP = function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0
   #       If iter = FALSE, the function returns the simple HP filter (fit only once).
   #       If iter = TRUE, the boosted HP filter.
   #   test_type (stopping criterion):
-  #       If ="adf" or "BIC", the two stopping criteria in the paper.
+  #       If ="adf" or "BIC", the two stopping criteria elaborated in the paper.
   #       If = "none", iterated until Max_Iter
   #   sig_p: the significance level of the ADF test as the stopping criterion.
   #           It is useful only when test_type == "adf".
   #   Max_Iter: the maximum number of iterations.
-
+  #--------------------------------------------------------------------------------------
   # Outputs
   #   $cycle: the cyclical components in the final round
   #   $trend: the trend component in the final round
@@ -86,14 +94,17 @@ BoostedHP = function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0
 
 
   if (!is.numeric(x) || anyNA(x) ) {
-    stop("argument is not numeric or containing NAs: returning NA")
+    stop("Argument is not numeric or containing NAs: returning NA")
     return(NA_real_)
   }
 
+
+
+  # POSIXct (date/time) index
+
   ## generating trend operator matrix "S"
-
+  raw_x <- x # save the raw data before HP
   n <- length(x) # data size
-
 
   I_n <-  diag(n)
   D_temp <- rbind(matrix(0, 1, n), diag(1, n - 1, n))
@@ -110,12 +121,12 @@ BoostedHP = function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0
 
   if(iter==FALSE){
 
-    message("conducted the simple HP filter")
+    message("Conducted the simple HP filter.")
 
     # get the trend and cycle
     x_f <- S %*% x
     x_c <- x - x_f
-    result <-list(cycle = x_c, trend_hist = x_f, trend = x - x_c)
+    result <- list(cycle = x_c, trend_hist = x_f,test_type = "none-iter", trend = x - x_c, raw_data = raw_x)
 
   }
 
@@ -128,11 +139,12 @@ BoostedHP = function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0
 
 
     if (test_type == "adf"){
-      message("iterated HP filter with ADF test criterion")
+      message("Iterated HP filter with ADF test criterion.")
     } else if ( test_type == "BIC"){
-      message( "iterated HP filter with BIC criterion")
+      message( "Iterated HP filter with BIC criterion.")
+      message( "Save the path of BIC till iter+1 times to show the 'turning point' feature of choosen iteration time in BIC history.")
     }  else if ( test_type == "none" ) {
-      message( "iterated HP filter until Max_Iter")
+      message( "Iterated HP filter until Max_Iter and keep the path of BIC.")
     }
 
 
@@ -152,7 +164,7 @@ BoostedHP = function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0
         x_c <- ( diag(n) - S ) %*% x_c # update
         x_f[, r] <- x - x_c
 
-        adf_p_r <- adf.test(x_c, alternative = "stationary")$p.value
+        adf_p_r <- (tseries::adf.test(x_c, alternative = "stationary"))$p.value
         # x_c is the residual after the mean and linear trend being removed by HP filter
         # we use the critical value for the ADF distribution with
         # the intercept and linear trend specification
@@ -180,9 +192,9 @@ BoostedHP = function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0
                 The residual cycle remains non-stationary.")
       }
 
-      result <- list( cycle = x_c, trend_hist = x_f,  test_type = test_type,
-                      adf_p_hist= adf_p, iter_num = R,
-                      trend  = x - x_c)
+      result <- list(cycle = x_c, trend_hist = x_f,  test_type = test_type,
+                     signif_p = sig_p, adf_p_hist= adf_p, iter_num = R,
+                     trend  = x - x_c, raw_data = raw_x)
       } else  {
 
         # assignment
@@ -224,11 +236,30 @@ BoostedHP = function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0
         x_c <- x - x_f[,R]
         # browser()
 
-        result <- list( cycle = x_c, trend_hist = x_f,  test_type = test_type,
-                        IC_hist = IC, iter_num = R, trend =  x- x_c  )
+
+        if(test_type == "BIC"){
+          # save the path of BIC till iter+1 times to keep the "turning point" of BIC history.
+          result <- list(cycle = x_c, trend_hist = x_f,  test_type = test_type,
+                         BIC_hist = IC[1:(R+1)], iter_num = R, trend =  x- x_c, raw_data = raw_x)
+
+        }
+
+        if(test_type == "none"){
+
+        result <- list(cycle = x_c, trend_hist = x_f,  test_type = test_type,
+                       BIC_hist = IC,iter_num = Max_Iter-1, trend =  x- x_c, raw_data = raw_x)
+
+        }
+
+
+
       }
 
   } # end the boosted HP
 
+  attr(result,'class')<-'bHP'
+
   return(result)
 }
+
+
