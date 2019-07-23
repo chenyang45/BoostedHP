@@ -1,0 +1,6 @@
+
+install.packages("devtools")
+devtools::install_github("chenyang45/BoostedHP/BoostedHP")
+library("BoostedHP")
+
+https://cran.r-project.org/src/contrib/Archive/devtools/devtools_1.13.6.tar.gz
