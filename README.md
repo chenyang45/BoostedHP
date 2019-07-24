@@ -2,7 +2,7 @@
 
 This is an R package for Peter Phillips and Zhentao Shi (2019): ["Boosting the Hodrick-Prescott Filter"](https://arxiv.org/abs/1905.00175). The method is implemented by the function `BoostedHP()`. 
 
-version : 0.0.3
+version : 0.0.5 (2019-07-22)
 
 
 
