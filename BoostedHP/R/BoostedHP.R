@@ -1,5 +1,5 @@
 # Boosting the Hodrick-Prescott Filter
-# by Peter Phillips and Zhentao Shi (2018)
+# by Peter Phillips and Zhentao Shi (2019)
 #
 #================================================================
 # R version 3.4.3 (2017-11-30) -- "Kite-Eating Tree"
@@ -32,19 +32,25 @@
 #' @param x an object of class "bHP"
 #' @param lambda the turning parameter, default value is 1600.
 #' @param iter logical parameter, TRUE (default) is to conduct iterated HP-filter, FALSE is not.
-#' @param test_type the type for creterion: none-iter, adf, BIC, none (default).
-#' @param sig_p significant p-value, default value is 0.050.
-#' @param Max_Iter maximum iterated time, default value is 100.
+#' @param test_type the type for creterion: none-iter, adf, BIC (default), none.
+#' @param sig_p a threshold of the p-value below which the iteration will stop. default value is 0.050.
+#' @param Max_Iter maximal number of iterations. The default value is 100.
 #'
-#' @return cycle component, trend component, raw data, iterated number, p-value or BIC.
+#' @return The function returns a list containing the following items
+#' \item{cycle}{The cyclical component in the final iteration.}
+#' \item{trend}{The trend component in the final iteration.}
+#' \item{trend_hist}{The estimated trend in each iteration.}
+#' \item{iter_num}{The total number of iterations when it stops.}
+#' \item{IC_hist}{The path of the BIC through the iterations.}
+#' \item{adf_p_hist}{The path of the ADF test p-value through the iterations}
+
 #' @export
 #'
 #' @examples
 #' library(tseries)
 #'
+#' data(IRE) # load the data 'IRE'
 #' lam <- 100 # tuning parameter for the annaul data
-#'
-#' data(IRE) # laod the data 'IRE'
 #'
 #' # raw HP filter
 #' bx_HP <- BoostedHP(IRE, lambda = lam, iter= FALSE)
@@ -60,35 +66,12 @@
 #'
 #' bx_none <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "none")
 #'
-#'
 
 
-BoostedHP <- function(x, lambda = 1600, iter= TRUE, test_type = "none", sig_p = 0.050, Max_Iter = 100) {
+BoostedHP <- function(x, lambda = 1600, iter= TRUE, test_type = "BIC", sig_p = 0.050, Max_Iter = 100) {
 
 
   # Require Package: tseries, expm
-  #--------------------------------------------------------------------------------------
-  # Inputs
-  #   x: a univariate time series
-  #   lambda: the tuning parameter in the HP filter (base learner). Default is 1600.
-  #   iter: logical.
-  #       If iter = FALSE, the function returns the simple HP filter (fit only once).
-  #       If iter = TRUE, the boosted HP filter.
-  #   test_type (stopping criterion):
-  #       If ="adf" or "BIC", the two stopping criteria elaborated in the paper.
-  #       If = "none", iterated until Max_Iter
-  #   sig_p: the significance level of the ADF test as the stopping criterion.
-  #           It is useful only when test_type == "adf".
-  #   Max_Iter: the maximum number of iterations.
-  #--------------------------------------------------------------------------------------
-  # Outputs
-  #   $cycle: the cyclical components in the final round
-  #   $trend: the trend component in the final round
-  #   $trend_hist: the estimated trend in each iteration
-  #   $iter_num: the total number of iterations
-  #   $IC_hist: the path of the information criterion along the iterations
-  #   $adf_p_hist: the path of the ADF test p-value along the iterations
-
 
 
 

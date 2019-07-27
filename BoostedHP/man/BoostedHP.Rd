@@ -4,7 +4,7 @@
 \alias{BoostedHP}
 \title{Boosting the Hodrick-Prescott Filter}
 \usage{
-BoostedHP(x, lambda = 1600, iter = TRUE, test_type = "none",
+BoostedHP(x, lambda = 1600, iter = TRUE, test_type = "BIC",
   sig_p = 0.05, Max_Iter = 100)
 }
 \arguments{
@@ -14,14 +14,20 @@ BoostedHP(x, lambda = 1600, iter = TRUE, test_type = "none",
 
 \item{iter}{logical parameter, TRUE (default) is to conduct iterated HP-filter, FALSE is not.}
 
-\item{test_type}{the type for creterion: none-iter, adf, BIC, none (default).}
+\item{test_type}{the type for creterion: none-iter, adf, BIC (default), none.}
 
-\item{sig_p}{significant p-value, default value is 0.050.}
+\item{sig_p}{a threshold of the p-value below which the iteration will stop. default value is 0.050.}
 
-\item{Max_Iter}{maximum iterated time, default value is 100.}
+\item{Max_Iter}{maximal number of iterations. The default value is 100.}
 }
 \value{
-cycle component, trend component, raw data, iterated number, p-value or BIC.
+The function returns a list containing the following items
+\item{cycle}{The cyclical component in the final iteration.}
+\item{trend}{The trend component in the final iteration.}
+\item{trend_hist}{The estimated trend in each iteration.}
+\item{iter_num}{The total number of iterations when it stops.}
+\item{IC_hist}{The path of the BIC through the iterations.}
+\item{adf_p_hist}{The path of the ADF test p-value through the iterations}
 }
 \description{
 all in one function of conducting iterated HP-filter for types: none-iter, adf, BIC, none.
@@ -29,9 +35,8 @@ all in one function of conducting iterated HP-filter for types: none-iter, adf, 
 \examples{
 library(tseries)
 
+data(IRE) # load the data 'IRE'
 lam <- 100 # tuning parameter for the annaul data
-
-data(IRE) # laod the data 'IRE'
 
 # raw HP filter
 bx_HP <- BoostedHP(IRE, lambda = lam, iter= FALSE)
@@ -46,6 +51,5 @@ bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf")
 # Iterated HP filter until Max_Iter and keep the path of BIC.
 
 bx_none <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "none")
-
 
 }
