@@ -29,11 +29,11 @@
 #'
 #' all in one function of conducting iterated HP-filter for types: none-iter, adf, BIC, none.
 #'
-#' @param x an object of class "bHP"
-#' @param lambda the turning parameter, default value is 1600.
-#' @param iter logical parameter, TRUE (default) is to conduct iterated HP-filter, FALSE is not.
-#' @param test_type the type for creterion: none-iter, adf, BIC (default), none.
-#' @param sig_p a threshold of the p-value below which the iteration will stop. default value is 0.050.
+#' @param x is a time series to be filtered.
+#' @param lambda the turning parameter, default value is 1600, as recommended by Hodrick-Prescott for quarterly data.
+#' @param iter logical parameter, TRUE (default) is to conduct iterated HP-filter, FALSE does not iterated so is the same as the original HP filter.
+#' @param test_type stopping criterion. "adf", or "BIC" (default), "none".
+#' @param sig_p a threshold of the p-value below which the iteration will stop. default value is 0.050. only effective when test_type = adf
 #' @param Max_Iter maximal number of iterations. The default value is 100.
 #'
 #' @return The function returns a list containing the following items
@@ -72,8 +72,6 @@ BoostedHP <- function(x, lambda = 1600, iter= TRUE, test_type = "BIC", sig_p = 0
 
 
   # Require Package: tseries, expm
-
-
 
 
   if (!is.numeric(x) || anyNA(x) ) {
