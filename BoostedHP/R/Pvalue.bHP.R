@@ -6,7 +6,7 @@
 #'
 
 
-Pvalue <- function(x,...) UseMethod("Pvalue",x)
+Pvalue <- function(x, ...) UseMethod("Pvalue", x)
 
 
 #' Pvalue.bHP
@@ -26,7 +26,7 @@ Pvalue <- function(x,...) UseMethod("Pvalue",x)
 #'
 #' # by ADF
 #'
-#' bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf")
+#' bx_ADF <- BoostedHP(IRE, lambda = lam, iter = TRUE, test_type = "adf")
 #' Pvalue(bx_ADF)
 #'
 #' # Retrun the value path of adf.
@@ -40,7 +40,7 @@ Pvalue <- function(x,...) UseMethod("Pvalue",x)
 #'
 #' # raw HP filter
 #'
-#' bx_HP <- BoostedHP(IRE, lambda = lam, iter= FALSE)
+#' bx_HP <- BoostedHP(IRE, lambda = lam, iter = FALSE)
 #' Pvalue(bx_HP)
 #'
 #' # Error in Pvalue.bHP(bx_HP) :
@@ -48,7 +48,7 @@ Pvalue <- function(x,...) UseMethod("Pvalue",x)
 #'
 #' # by BIC
 #'
-#' bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "BIC")
+#' bx_BIC <- BoostedHP(IRE, lambda = lam, iter = TRUE, test_type = "BIC")
 #' Pvalue(bx_BIC)
 #'
 #' # Error in Pvalue.bHP(bx_BIC) : The stationary test type is BIC, not ADF.
@@ -56,28 +56,18 @@ Pvalue <- function(x,...) UseMethod("Pvalue",x)
 #' # by none test type
 #' # Iterated HP filter until Max_Iter and keep the path of BIC.
 #'
-#' bx_none <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "none")
+#' bx_none <- BoostedHP(IRE, lambda = lam, iter = TRUE, test_type = "none")
 #' Pvalue(bx_none)
 #'
-#' #Error in Pvalue.bHP(bx_none) : The stationary test type is none, not ADF.
-#'
-#'
-#'
-
-
-Pvalue.bHP <- function(x){
-
-  if(x$test_type == "adf"){
-
+#' # Error in Pvalue.bHP(bx_none) : The stationary test type is none, not ADF.
+Pvalue.bHP <- function(x) {
+  if (x$test_type == "adf") {
     message("Retrun the value path of ", x$test_type, ".")
-    message("Iterated number of HP filter: ",x$iter_num)
+    message("Iterated number of HP filter: ", x$iter_num)
 
     return(x$adf_p_hist)
-
   }
   else {
-    stop("The stationary test type is ",x$test_type, ", not ADF.")
-    }
+    stop("The stopping criterion is ", x$test_type, ", not ADF.")
+  }
 }
-
-
