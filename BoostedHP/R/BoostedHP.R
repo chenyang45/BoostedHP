@@ -44,7 +44,24 @@
 #' \item{IC_hist}{The path of the BIC through the iterations.}
 #' \item{adf_p_hist}{The path of the ADF test p-value through the iterations}
 
+#'
+#'#' @details
+#' Given time series data eqn(\left(x_{t}:t=1,\ldots,n\right)),
+#' the HP method decomposes the series into
+#' two additive components --- a trend component eqn(\left(f_{t}\right))
+#' and a residual or cyclical component eqn(\left(c_{t}\right)), estimated as
+#' deqn(left(\widehat{f}_{t}^{\mathrm{HP}}\right)
+#' =\arg\min_{\left(f_{t}\right)}\left\{ \sum_{t=1}^{n}\left(x_{t}-f_{t}\right)^{2}
+#' +\lambda\sum_{t=2}^{n}\left(\Delta ^ 2 f_{t}\right)^{2}\right\},)
+#' and
+#' deqn(\left(\widehat{c}_{t}^{\mathrm{HP}}\right)=\left(x_t-\widehat{f}_{t}^{\mathrm{HP}}\right)
+#' where eqn(\Delta f_{t}=f_{t}-f_{t-1}),
+#' and eqn(\Delta^2 f_{t}= \Delta f_{t}- \Delta f_{t-1} = f_{t}- 2 f_{t-1} + f_{t-2}),
+#' and eqn(\lambda\geq 0)
+#' is a tuning parameter that controls the extent of the penalty.
+#'
 #' @export
+#'
 #'
 #' @examples
 #' library(tseries)
