@@ -23,7 +23,7 @@ lam <- 100 # tuning parameter for the annaul data
 data(IRE) # laod the data 'IRE'
 
 # raw HP filter
-bx_HP <- BoostedHP(x, lambda = lam, iter= FALSE)
+bx_HP <- BoostedHP(IRE, lambda = lam, iter= FALSE)
 
 # by BIC
 bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "BIC")

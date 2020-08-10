@@ -23,7 +23,9 @@
 #' @return X-Y Plotting method for class 'bHP'
 #' @export
 #'
-#' @examples lam <- 100 # tuning parameter for the annaul data
+#' @examples
+#'
+#' lam <- 100 # tuning parameter for the annaul data
 #'
 #' \dontrun{
 #' data(IRE) # laod the data 'IRE'
@@ -44,7 +46,7 @@
 #'
 #' #--------- start to plot the content of bHP -----------------
 #'
-#' \dontrun{
+#'
 #' #--------- for dynamic style (default)--------
 #' plot(bx_ADF)
 #'
@@ -90,6 +92,7 @@
 #'
 #' plot(bx_none,plot_type = "static",cex_legend = 0.8, cex_text = 0.8 )
 #' }
+#'
 plot.bHP <- function(x, plot_type= "dynamic", interval_t = 0.3,  ylab = "",
                      col_raw = "#2D5375", col_trend_h = "#FBB545", col_trend_f = "red", col_pvalue_BIC = "red",
                      # the range of alpha is 0-255

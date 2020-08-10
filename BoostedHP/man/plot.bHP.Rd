@@ -4,12 +4,13 @@
 \alias{plot.bHP}
 \title{Plot method for class 'bHP'}
 \usage{
-\method{plot}{bHP}(x, plot_type = "dynamic", interval_t = 0.3, ylab = "",
-  col_raw = "#2D5375", col_trend_h = "#FBB545", col_trend_f = "red",
-  col_pvalue_BIC = "red", raw_alpha = 255, trend_h_alpha = 75,
-  trend_f_alpha = 255, pvalue_BIC_alpha = 255, legend_location = "upleft",
-  iteration_location = "downright", cex_text = 1.7, cex_legend = 1.5,
-  main = paste0("Figure of ", x$test_type, " bHP (", plot_type, ")"))
+\method{plot}{bHP}(x, plot_type = "dynamic", interval_t = 0.3,
+  ylab = "", col_raw = "#2D5375", col_trend_h = "#FBB545",
+  col_trend_f = "red", col_pvalue_BIC = "red", raw_alpha = 255,
+  trend_h_alpha = 75, trend_f_alpha = 255, pvalue_BIC_alpha = 255,
+  legend_location = "upleft", iteration_location = "downright",
+  cex_text = 1.7, cex_legend = 1.5, main = paste0("Figure of ",
+  x$test_type, " bHP (", plot_type, ")"))
 }
 \arguments{
 \item{x}{an object of class "bHP"}
@@ -53,12 +54,14 @@ X-Y Plotting method for class 'bHP'
 all in one function of iterated HP-filter
 }
 \examples{
+
 lam <- 100 # tuning parameter for the annaul data
 
+\dontrun{
 data(IRE) # laod the data 'IRE'
 
 # raw HP filter
-bx_HP <- BoostedHP(x, lambda = lam, iter= FALSE)
+bx_HP <- BoostedHP(IRE, lambda = lam, iter= FALSE)
 
 # by BIC
 bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "BIC")
@@ -72,6 +75,7 @@ bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf")
 bx_none <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "none")
 
 #--------- start to plot the content of bHP -----------------
+
 
 #--------- for dynamic style (default)--------
 plot(bx_ADF)
@@ -117,6 +121,6 @@ plot(bx_HP,plot_type = "static")
 plot(bx_BIC,plot_type = "static",cex_legend = 0.7, cex_text = 0.8 )
 
 plot(bx_none,plot_type = "static",cex_legend = 0.8, cex_text = 0.8 )
-
+}
 
 }

@@ -18,7 +18,7 @@ As 'none' type of bHP also keep BIC for each iteration time till the max_iter, B
 return BIC value for 'none' bHP.
 }
 \examples{
-
+\dontrun{
 lam <- 100 # tuning parameter for the annaul data
 
 data(IRE) # laod the data 'IRE'
@@ -29,10 +29,6 @@ bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "BIC")
 
 BIC(bx_BIC)
 
-#Retrun the value path of BIC.
-#Iterated number of HP filter: 5
-#Keep the path of BIC till iterated 6 times to show the tuning point.
-#[1] 1.586255 1.366335 1.293931 1.264323 1.254397 1.254620
 
 bx_none <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "none")
 
@@ -64,7 +60,5 @@ BIC(bx_ADF)
 
 #Error in BIC.bHP(bx_ADF) :
 #The stationary test type is adf, not BIC or none.
-
-
-
+}
 }

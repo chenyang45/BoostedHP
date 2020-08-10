@@ -7,13 +7,13 @@
 \method{residuals}{bHP}(x)
 }
 \arguments{
-\item{x}{an object of class "bHP"}
+\item{x}{an object of class \code{bHP}}
 }
 \value{
-cycle component
+the estimated cycle component
 }
 \description{
-Extract the final cycle component for class 'bHP', corresponding with predict.bHP.
+Extract the final cycle component for class \code{bHP}.
 }
 \examples{
 lam <- 100 # tuning parameter for the annaul data
@@ -21,16 +21,14 @@ lam <- 100 # tuning parameter for the annaul data
 data(IRE) # laod the data 'IRE'
 
 # raw HP filter
-bx_HP <- BoostedHP(IRE, lambda = lam, iter= FALSE)
+bx_HP <- BoostedHP(IRE, lambda = lam, iter = FALSE)
 
 # by ADF
-bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf", sig_p = 0.050)
+bx_ADF <- BoostedHP(IRE, lambda = lam, iter = TRUE, test_type = "adf", sig_p = 0.050)
 
 # return the final trend component
 
-residuals(bx_HP) #Iterated number of HP filter: 1
+residuals(bx_HP) # Iterated number of HP filter: 1
 
-residuals(bx_ADF) #Iterated number of HP filter: 19
-
-
+residuals(bx_ADF) # Iterated number of HP filter: 19
 }
