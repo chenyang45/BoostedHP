@@ -25,10 +25,11 @@
 #'
 #' @examples lam <- 100 # tuning parameter for the annaul data
 #'
+#' \dontrun{
 #' data(IRE) # laod the data 'IRE'
 #'
 #' # raw HP filter
-#' bx_HP <- BoostedHP(x, lambda = lam, iter= FALSE)
+#' bx_HP <- BoostedHP(IRE, lambda = lam, iter= FALSE)
 #'
 #' # by BIC
 #' bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "BIC")
@@ -43,6 +44,7 @@
 #'
 #' #--------- start to plot the content of bHP -----------------
 #'
+#' \dontrun{
 #' #--------- for dynamic style (default)--------
 #' plot(bx_ADF)
 #'
@@ -87,12 +89,7 @@
 #' plot(bx_BIC,plot_type = "static",cex_legend = 0.7, cex_text = 0.8 )
 #'
 #' plot(bx_none,plot_type = "static",cex_legend = 0.8, cex_text = 0.8 )
-#'
-#'
-
-
-
-
+#' }
 plot.bHP <- function(x, plot_type= "dynamic", interval_t = 0.3,  ylab = "",
                      col_raw = "#2D5375", col_trend_h = "#FBB545", col_trend_f = "red", col_pvalue_BIC = "red",
                      # the range of alpha is 0-255
