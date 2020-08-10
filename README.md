@@ -15,12 +15,8 @@ The method is implemented by the function `BoostedHP()`.
 A preliminary R package can be installed by running in `R`
 ```
 install.packages("devtools")
-devtools::install_github("chenyang45/BoostedHP/BoostedHP")
-library("BoostedHP")
+devtools::install_github("chenyang45/BoostedHP/")
+library("bHP")
 ```
 
 
-
-To do: 2020-08-10
-
-When the branch of `develop` in merged into `master`, update the name of the package from `BoostedHP` to `bHP`.
