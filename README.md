@@ -1,8 +1,8 @@
 # Boosted Hodrick-Prescott Filter
 
-This is an R package for Peter Phillips and Zhentao Shi (2019): ["Boosting the Hodrick-Prescott Filter"](https://arxiv.org/abs/1905.00175). The method is implemented by the function `BoostedHP()`. 
+This is an R package for Peter Phillips and Zhentao Shi (2020): ["Boosting the Hodrick-Prescott Filter"](https://arxiv.org/abs/1905.00175). 
 
-latest update: 2019-07-22
+The method is implemented by the function `BoostedHP()`. 
 
 
 
@@ -20,3 +20,7 @@ library("BoostedHP")
 ```
 
 
+
+To do: 2020-08-10
+
+When the branch of `develop` in merged into `master`, update the name of the package from `BoostedHP` to `bHP`.
