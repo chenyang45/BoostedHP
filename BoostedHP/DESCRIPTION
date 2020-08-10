@@ -1,13 +1,20 @@
-Package: BoostedHP
+Package: bHP
 Type: Package
-Title: iterated HP-filter produciton
+Title: Iterative HP-filter refitting
 Version: 0.0.5
-Author: Chen Yang
-Maintainer: Chen Yang <chen_yang@link.cuhk.edu.hk>
+Authors@R: c(
+    person("Yang", "Chen", role = c("aut", "cre"), email = "chen_yang@link.cuhk.edu.hk"),
+    person("Zhentao", "Shi", role = c("aut"), email = "shizhentao@gmail.com" )
+    )
 Description: This is an accompanying repository for the paper Peter Phillips and Zhentao Shi (2019): "Boosting the Hodrick-Prescott Filter"
 License: MIT
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    expm,stargazer,animation,plotly,magrittr
+    expm,
+    stargazer,
+    animation,
+    plotly,
+    magrittr,
+    tseries
 RoxygenNote: 6.1.1
