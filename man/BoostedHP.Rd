@@ -68,3 +68,8 @@ bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf")
 bx_none <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "none")
 
 }
+\references{
+Phillips, Peter CB, and Zhentao Shi.
+"Boosting: Why you can use the hp filter."
+arXiv: 1905.00175, Cowles Foundation Discussion Paper No.2192, (2019).
+}
