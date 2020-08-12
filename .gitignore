@@ -6,3 +6,4 @@
 *.zip
 *.Rcheck*
 inst/doc
+*.bib
