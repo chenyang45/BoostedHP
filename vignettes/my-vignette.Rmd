@@ -1,5 +1,5 @@
 ---
-title: "my-vignette"
+title: "Boosted HP Filter"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{my-vignette}
@@ -14,10 +14,32 @@ knitr::opts_chunk$set(
 )
 ```
 
+
+
+
 ```{r setup}
 library(bHP)
 ```
 
+
+
+Given time series data $(x_{t})_{t=1}^n$
+the HP method decomposes the series into
+two additive components --- a trend component $f_{t}$
+and a residual or cyclical component $c_{t}$, estimated as
+\[
+(\hat{f}_{t}^{HP} )
+ =\arg\min_{ (f_{t} )}  \{ \sum_{t=1}^{n} (x_{t}-f_{t} )^{2}
+ +\lambda\sum_{t=2}^{n} (\Delta^ 2 f_{t}  )^{2} \},
+\]
+ and
+\[
+(\hat{c}_{t}^{HP} )=( x_t-\hat{f}_{t}^{HP}) 
+\]
+ where $\Delta f_{t}=f_{t}-f_{t-1}$,
+and $\Delta^2 f_{t}= \Delta f_{t}- \Delta f_{t-1} = f_{t}- 2 f_{t-1} + f_{t-2}$,
+and $\lambda\geq 0$
+is a tuning parameter that controls the extent of the penalty.
 
 
 #### Example
