@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 library(bHP)
 ```
 
-
+## HP filter
 
 Given time series data $(x_{t})_{t=1}^n$
 the HP method decomposes the series into
@@ -42,7 +42,59 @@ and $\lambda\geq 0$
 is a tuning parameter that controls the extent of the penalty.
 
 
-#### Example
+
+
+## Boosted HP filter
+
+
+In the HP case, if $D'$ is the rectangular $\left(n-2\right)\times n$ matrix
+with second differencing vector $d=\begin{pmatrix}1 & -2 & 1\end{pmatrix}'$ along
+the leading tri-diagonals and  $I_{n}$ is the $n\times n$ identity
+matrix, the explicit form of the trend solution is
+\begin{equation} \label{tt1}
+\widehat{f}^{\mathrm{HP}}=Sx,
+\end{equation}
+where $S=\left(I_n+\lambda DD'\right)^{-1}$ is a deterministic operator and $x=(x_1,...,x_n)'$ is the sample data.
+The smoothed component $\widehat{f}^{\mathrm{HP}}$ is interpreted as the estimated 
+trend and 
+\[
+\widehat{c}^{\mathrm{HP}}=x-\widehat{f}^{\mathrm{HP}}=\left(I_{n}-S\right)x
+\]
+as the estimated cyclical or stationary component. 
+
+
+The problem of consistent HP filter estimation of the trend then amounts to whether as $n \to \infty$ we have 
+$ \frac{\widehat{f}_{\left\lfloor nr\right\rfloor }^{\mathrm{HP}}}{\sqrt{n}} \rightsquigarrow B(r)$, 
+in which case the filter asymptotically captures the underlying stochastic process trend in $x_t$. PJ show that this reproduction of the asymptotic form of the trend holds only under special restrictions on the smoothing parameter $\lambda$ that ensure it does not diverge too quickly. In particular, if  $\lambda = O(n^4)$ or greater as $n \to \infty$, then the HP filter trend 
+$ \widehat{f}_{\left\lfloor nr\right\rfloor }^{\mathrm{HP}}$
+ is inconsistent. In such cases, 
+$\frac{\widehat{f}_{\left\lfloor nr\right\rfloor }^{\mathrm{HP}}}{\sqrt{n}} \rightsquigarrow f^{\mathrm{HP}}\left(r\right)$ 
+where $f^{\mathrm{HP}}\left(r\right)$ is a smooth stochastic process different from $B(r)$, which implies that the cyclical component $\widehat{c}^{\mathrm{HP}}=x-\widehat{f}^{\mathrm{HP}}$ inevitably inherits elements of the stochastic trend even in the limit. Similar issues arise in the case of time series with stochastic trends coupled with deterministic drift or deterministic drift with breaks (see PJ for details). In all these cases, the HP filter fails to recover the underlying trend in $x_t$ asymptotically. The limit theory therefore confirms much informal commentary in the literature concerning the shortcomings of the HP filter as a suitable trend determination mechanism for economic data.     
+
+We propose an easy remedy to establish consistent estimation of stochastic process and deterministic trends in the data. If the cyclical component $\widehat{c}_{t}^{\mathrm{HP}}$ still exhibits
+trending behavior after HP filtering, we continue to apply the HP filter to
+$\widehat{c}^{\mathrm{HP}}$ to remove the leftover trend residual. After a second fitting, the cyclical component can be written as
+\[
+\widehat{c}^{\left(2\right)}=\left(I_{n}-S\right)\widehat{c}^{\mathrm{HP}}=\left(I_{n}-S\right)^{2}x,
+\]
+where the superscript ``$\left(2\right)$'' indicates that the HP
+filter is fitted twice. The corresponding trend component becomes
+\[
+\widehat{f}^{\left(2\right)}=x-\widehat{c}^{\left(2\right)}=\left(I_{n}-\left(I_{n}-S\right)^{2}\right)x.
+\]
+If $\widehat{c}^{\left(2\right)}$ continues to exhibit trend behavior, the filtering process may be continued for a third or further time. 
+After $m$ repeated applications of the filter, the cyclical and trend component are 
+\[
+	\widehat{c}^{\left(m\right)}  =  \left(I_{n}-S\right)\widehat{c}^{\left(m-1\right)}=\left(I_{n}-S\right)^{m}x \\
+	\widehat{f}^{\left(m\right)}  =  x-\widehat{c}^{\left(m\right)}=B_{m}x, 
+\]
+where $B_{m}=I_{n}-\left(I_{n}-S\right)^{m}.$ We call
+this iterated process the \emph{boosted HP filter} or bHP in view of its similarity to $L_{2}$-boosting in terms of  
+numerical implementation.
+
+
+
+## Examples
 
 ```{r, eval=FALSE}
 lam <- 100 # tuning parameter for the annaul data

@@ -11,7 +11,7 @@
 #
 # ===============================================================
 #
-# Version 0.0.5
+# Version 0.0.6
 #
 # You can learn more about package authoring with RStudio at:
 #
