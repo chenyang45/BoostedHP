@@ -24,11 +24,6 @@ This dataset is described in Section 4.1 of Philips and Shi (2019).
 Also See Okun, Ball, Leigh, and Loungani (2017).
 }
 
-\examples{
-plot(y = IRE, x = 1981:2016, type = "l", )
-
-
-}
 \references{
 Phillips, Peter CB, and Zhentao Shi.
 "Boosting: Why you can use the hp filter."

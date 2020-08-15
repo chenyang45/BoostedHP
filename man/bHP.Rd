@@ -8,12 +8,10 @@
 \description{
 Iterated HP filtering by Phillips and Shi (2019)
 }
-\section{Description}{
-
+\details{
 \code{BoostedHP} is the main function. It genereates a \code{bHP} object that can work with
 generic methods.
 }
-
 \references{
 Phillips, Peter CB, and Zhentao Shi.
 "Boosting: Why you can use the hp filter."
