@@ -1,10 +1,10 @@
-#' BoostedHP: A package for the boosted HP filter
+#' BoostedHP: Package for the boosted HP filter
 #'
-#' Iterated HP filtering by Phillips and Shi (2020)
+#' Iterated HP filtering by Phillips and Shi (2019)
 #'
-#' @section Boosted HP main function:
 #'
-#' BoostedHP is the main function
+#' \code{BoostedHP} is the main function. It genereates a \code{bHP} object that can work with
+#' generic methods.
 #'
 #' @references
 #'
@@ -12,7 +12,6 @@
 #' "Boosting: Why you can use the hp filter."
 #' arXiv: 1905.00175, Cowles Foundation Discussion Paper No.2192, (2019).
 #'
-
 #' @docType package
 #' @name bHP
 NULL
@@ -31,8 +30,8 @@ NULL
 #'  \item\strong{Date Range:} {1981--2016}
 #' }
 #'
-#' @section
-#' Described in Section 4.1 of Philips and Shi (2019).
+#' @section Descripton:
+#' This dataset is described in Section 4.1 of Philips and Shi (2019).
 #' Also See Okun, Ball, Leigh, and Loungani (2017).
 #'
 #'
@@ -47,10 +46,6 @@ NULL
 #' Ball, Laurence, Daniel Leigh, and Prakash Loungani.
 #'   "Okun's law: Fit at 50?."
 #'   Journal of Money, Credit and Banking 49, no. 7 (2017): 1413-1441.
-#'
-#'
-#' @examples
-#' plot(y = IRE, x = 1981:2016, type = "l", )
 #'
 #'
 #' @docType data
