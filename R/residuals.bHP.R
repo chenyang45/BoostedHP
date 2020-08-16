@@ -9,25 +9,25 @@
 #' @export
 #'
 #' @examples
-#' lam <- 100 # tuning parameter for the annaul data
+#' lam <- 100 # tuning parameter for the annual data
 #'
-#' data(IRE) # laod the data 'IRE'
+#' data(IRE) # load the data 'IRE'
 #'
 #' # raw HP filter
 #' bx_HP <- BoostedHP(IRE, lambda = lam, iter = FALSE)
 #'
 #' # by ADF
-#' bx_ADF <- BoostedHP(IRE, lambda = lam, iter = TRUE, test_type = "adf", sig_p = 0.050)
+#' bx_ADF <- BoostedHP(IRE, lambda = lam, iter = TRUE, stopping = "adf", sig_p = 0.050)
 #'
 #' # return the final trend component
 #'
-#' residuals(bx_HP) # Iterated number of HP filter: 1
+#' residuals(bx_HP)
 #'
-#' residuals(bx_ADF) # Iterated number of HP filter: 19
+#' residuals(bx_ADF)
 
 
 residuals.bHP <- function(x) {
-  message("Retrun the trend component of ", x$test_type, " test type.")
+  message("Retrun the trend component of ", x$stopping, " criterion.")
   message("Number of iterations: ", length(x$trend_hist[1, ]))
 
   return(x$cycle)
