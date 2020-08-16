@@ -4,11 +4,9 @@ Title: Boosted HP filter
 Version: 1.0.0
 Authors@R: c(
     person("Yang", "Chen", role = c("aut", "cre"), email = "chen_yang@link.cuhk.edu.hk"),
-    person("Zhentao", "Shi", role = c("aut"), email = "shizhentao@gmail.com" )
-    )
+    person("Zhentao", "Shi", role = c("aut"), email = "shizhentao@gmail.com" ) )
 Description: R package for the boosted HP filter, in 
-  Peter Phillips and Zhentao Shi (2019): 
-  "Boosting: Why you can use the HP filter." 
+  Peter Phillips and Zhentao Shi (2019): "Boosting: Why you can use the HP filter." 
   arXiv: 1905.00175, Cowles Foundation Discussion Paper No.2192.
 License: MIT
 Encoding: UTF-8

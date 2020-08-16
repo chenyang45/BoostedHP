@@ -65,7 +65,7 @@ bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "adf")
 # Iterated HP filter until Max_Iter and keep the path of BIC.
 
 bx_nonstop <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "nonstop")
-
+\dontrun{
 #--------- start to print the content of bHP -----------------
 print(bx_ADF)
 
@@ -88,4 +88,5 @@ print(bx_BIC, Head = F, Tail = T, trend_hist = F, print_type = "html")
 
 # show the generic print function output
 print(bx_ADF, type = "generic default")
+}
 }
