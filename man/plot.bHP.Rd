@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.bHP.R
 \name{plot.bHP}
 \alias{plot.bHP}
-\title{Plot method for class 'bHP'}
+\title{Plot method for class \code{bHP}}
 \usage{
 \method{plot}{bHP}(x, plot_type = "dynamic", interval_t = 0.3,
   ylab = "", col_raw = "#2D5375", col_trend_h = "#FBB545",
@@ -10,40 +10,60 @@
   trend_h_alpha = 75, trend_f_alpha = 255, pvalue_BIC_alpha = 255,
   legend_location = "upleft", iteration_location = "downright",
   cex_text = 1.7, cex_legend = 1.5, main = paste0("Figure of ",
-  x$test_type, " bHP (", plot_type, ")"))
+  x$stopping, " bHP (", plot_type, ")"))
 }
 \arguments{
-\item{x}{an object of class "bHP"}
+\item{x}{an object of class \code{bHP}}
 
-\item{plot_type}{a character string specifies the style of plot.'static' for static figure, 'JS' for plotly.js, a web-based interactive charting library, 'dynamic' for dynamic figure showing history of iterated process.}
+\item{plot_type}{a character string specifies the style of plot.'static' for
+static figure, 'JS' for plotly.js, a web-based interactive charting
+library, 'dynamic' for dynamic figure showing history of iterated process.}
 
-\item{interval_t}{a positive number to set the time interval of the animation (unit in seconds); default to be 0.3.}
+\item{interval_t}{a positive number to set the time interval of the animation
+(unit in seconds); default to be 0.3.}
 
 \item{ylab}{a title for the y axis: see 'title' in package 'graphics'.}
 
-\item{col_raw}{A specification for the default plotting color of raw data. See section ‘Color Specification’.}
+\item{col_raw}{A specification for the default plotting color of raw data.
+See section ‘Color Specification’.}
 
-\item{col_trend_h}{A specification for the default plotting color of trend history. See section ‘Color Specification’.}
+\item{col_trend_h}{A specification for the default plotting color of trend
+history. See section ‘Color Specification’.}
 
-\item{col_trend_f}{A specification for the default plotting color of final trend component. See section ‘Color Specification’.}
+\item{col_trend_f}{A specification for the default plotting color of final
+trend component. See section ‘Color Specification’.}
 
-\item{col_pvalue_BIC}{A specification for the default plotting color of p-value of BIC. See section ‘Color Specification’.}
+\item{col_pvalue_BIC}{A specification for the default plotting color of
+p-value of BIC. See section ‘Color Specification’.}
 
-\item{raw_alpha}{a numeric vector from 0 to 255 modifing colour transparency of plotting raw data. The smaller the number, the more transparent.}
+\item{raw_alpha}{a numeric vector from 0 to 255 modifying color transparency
+of plotting raw data. The smaller the number, the more transparent.}
 
-\item{trend_h_alpha}{a numeric vector from 0 to 255 modifing colour transparency of plotting trend history. The smaller the number, the more transparent.}
+\item{trend_h_alpha}{a numeric vector from 0 to 255 modifying color
+transparency of plotting trend history. The smaller the number, the more
+transparent.}
 
-\item{trend_f_alpha}{a numeric vector from 0 to 255 modifing colour transparency of plotting final trend component. The smaller the number, the more transparent.}
+\item{trend_f_alpha}{a numeric vector from 0 to 255 modifying color
+transparency of plotting final trend component. The smaller the number, the
+more transparent.}
 
-\item{pvalue_BIC_alpha}{a numeric vector from 0 to 255 modifing colour transparency of plotting p-value or BIC. The smaller the number, the more transparent.}
+\item{pvalue_BIC_alpha}{a numeric vector from 0 to 255 modifying color
+transparency of plotting p-value or BIC. The smaller the number, the more
+transparent.}
 
-\item{legend_location}{a character string or a pair of numeric vector specifing the location of legend. The choice set of the character sting are: upleft, downleft, upright, downright.}
+\item{legend_location}{a character string or a pair of numeric vector
+specifying the location of legend. The choice set of the character sting
+are: upleft, downleft, upright, downright.}
 
-\item{iteration_location}{a character string or a pair of numeric vector specifing the location of 'iteration time'. The choice set of the character sting are: upleft, downleft, upright, downright.}
+\item{iteration_location}{a character string or a pair of numeric vector
+specifying the location of 'iteration time'. The choice set of the character
+sting are: upleft, downleft, upright, downright.}
 
-\item{cex_text}{The magnification to be used for showing 'iteration time' relative to the current setting of cex.}
+\item{cex_text}{The magnification to be used for showing 'iteration time'
+relative to the current setting of cex.}
 
-\item{cex_legend}{The magnification to be used for legend relative to the current setting of cex.}
+\item{cex_legend}{The magnification to be used for legend relative to the
+current setting of cex.}
 
 \item{main}{an overall title for the plot: see 'title' in package 'graphics'.}
 }
@@ -51,28 +71,28 @@
 X-Y Plotting method for class 'bHP'
 }
 \description{
-all in one function of iterated HP-filter
+plot method for a \code{bHP} object
 }
 \examples{
 
-lam <- 100 # tuning parameter for the annaul data
+lam <- 100 # tuning parameter for the annual data
 
 \dontrun{
-data(IRE) # laod the data 'IRE'
+data(IRE) # load the data 'IRE'
 
 # raw HP filter
 bx_HP <- BoostedHP(IRE, lambda = lam, iter= FALSE)
 
 # by BIC
-bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "BIC")
+bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "BIC")
 
 # by ADF
-bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf")
+bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "adf")
 
-# by none test type
+# by nonstop test type
 # Iterated HP filter until Max_Iter and keep the path of BIC.
 
-bx_none <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "none")
+bx_nonstop <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "nonstop")
 
 #--------- start to plot the content of bHP -----------------
 
@@ -86,18 +106,18 @@ plot(bx_ADF, iteration_location = c(30,12)) # assign the location of text by x-y
 
 plot(bx_BIC, interval_t = 0.8 ) # change the time interval of animation
 
-plot(bx_none, cex_legend = 2, cex_text = 3) # change the magnification of legend and text
+plot(bx_nonstop, cex_legend = 2, cex_text = 3) # change the magnification of legend and text
 
 # change the color
 plot(bx_ADF,main = "dynamic graph with new color",col_raw = "#685F74", col_trend_h = "#39A1A8", col_trend_f = "#DD4B4F", col_pvalue_BIC = "#E96145")
 
-# change the trancparency
-plot(bx_ADF,main = "dynamic graph with new trancparency setting",raw_alpha = 200, trend_h_alpha = 55, trend_f_alpha = 250, pvalue_BIC_alpha = 250)
+# change the transparency
+plot(bx_ADF,main = "dynamic graph with new transparency setting",raw_alpha = 200, trend_h_alpha = 55, trend_f_alpha = 250, pvalue_BIC_alpha = 250)
 
-# Note: 'none' bHP doesn't have dynamic figure
+# Note: 'nonstop' bHP doesn't have dynamic figure
 plot(bx_HP)
 # Error in plot.bHP(bx_HP) :
-#'none-iter' bHP doesn't have dynamic picture: returning NA
+#'nonstop-iter' bHP doesn't have dynamic picture: returning NA
 
 #--------- for JS style ----------
 
@@ -108,7 +128,7 @@ plot(bx_ADF,plot_type = "JS",main = "Js graph with new color", col_raw = "#685F7
 
 plot(bx_BIC,plot_type = "JS")
 
-plot(bx_none,plot_type = "JS")
+plot(bx_nonstop,plot_type = "JS")
 
 plot(bx_HP,plot_type = "JS")
 
@@ -120,7 +140,7 @@ plot(bx_HP,plot_type = "static")
 
 plot(bx_BIC,plot_type = "static",cex_legend = 0.7, cex_text = 0.8 )
 
-plot(bx_none,plot_type = "static",cex_legend = 0.8, cex_text = 0.8 )
+plot(bx_nonstop,plot_type = "static",cex_legend = 0.8, cex_text = 0.8 )
 }
 
 }

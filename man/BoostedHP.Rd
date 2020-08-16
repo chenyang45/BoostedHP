@@ -4,69 +4,58 @@
 \alias{BoostedHP}
 \title{Boosting the Hodrick-Prescott Filter}
 \usage{
-BoostedHP(x, lambda = 1600, iter = TRUE, test_type = "BIC",
+BoostedHP(x, lambda = 1600, iter = TRUE, stopping = "BIC",
   sig_p = 0.05, Max_Iter = 100)
 }
 \arguments{
-\item{x}{is a time series to be filtered.}
+\item{x}{is a raw time series to be filtered.}
 
 \item{lambda}{the turning parameter, default value is 1600, as recommended by Hodrick-Prescott for quarterly data.}
 
-\item{iter}{logical parameter, TRUE (default) is to conduct iterated HP-filter, FALSE does not iterated so is the same as the original HP filter.}
+\item{iter}{logical, \code{TRUE} (default) to conduct the boosted HP filter.
+FALSE does not iterated, which is exactly the original HP filter.}
 
-\item{test_type}{stopping criterion. "adf", or "BIC" (default), "none".}
+\item{stopping}{stopping criterion. \code{"adf"}, or \code{"BIC"} (default), or \code{"nonstop"} means keeping
+iteration until the maximum number of iteration, specified by \code{Max_Iter} is reached.}
 
-\item{sig_p}{a threshold of the p-value below which the iteration will stop. default value is 0.050. only effective when test_type = adf}
+\item{sig_p}{a threshold of the p-value for the ADF test, with (default) value is 0.050.
+Only effective when \code{stopping = adf}.}
 
-\item{Max_Iter}{maximal number of iterations. The default value is 100.}
+\item{Max_Iter}{maximal number of iterations. The default is 100.}
 }
 \value{
-The function returns a list containing the following items
+The function returns a list containing the following items:
 \item{cycle}{The cyclical component in the final iteration.}
 \item{trend}{The trend component in the final iteration.}
 \item{trend_hist}{The estimated trend in each iteration.}
 \item{iter_num}{The total number of iterations when it stops.}
-\item{IC_hist}{The path of the BIC through the iterations.}
-\item{adf_p_hist}{The path of the ADF test p-value through the iterations}
+\item{IC_hist}{The path of the BIC up to the final iterations.}
+\item{adf_p_hist}{The path of the ADF test p-value up to the final iteration.}
 }
 \description{
-all in one function of conducting iterated HP-filter for types: none-iter, adf, BIC, none.
+All in one function of conducting the boosted HP-filter.
 }
 \details{
-Given time series data \eqn{ x_{t}:t=1,\ldots,n }
-the HP method decomposes the series into
-two additive components --- a trend component \eqn{ f_{t} }
-and a residual or cyclical component \eqn{   c_{t}  }, estimated as
-\deqn{(\hat{f}_{t}^{HP} )
-=\arg\min_{ (f_{t} )}  \{ \sum_{t=1}^{n} (x_{t}-f_{t} )^{2}
-+\lambda\sum_{t=2}^{n} (\Delta^ 2 f_{t}  )^{2} \},}
-and
-\deqn{ (\hat{c}_{t}^{HP} )=( x_t-\hat{f}_{t}^{HP}) }
-where \eqn{\Delta f_{t}=f_{t}-f_{t-1}},
-and \eqn{\Delta^2 f_{t}= \Delta f_{t}- \Delta f_{t-1} = f_{t}- 2 f_{t-1} + f_{t-2}},
-and \eqn{\lambda\geq 0}
-is a tuning parameter that controls the extent of the penalty.
+See the math formulas in the vignette.
 }
 \examples{
-library(tseries)
 
 data(IRE) # load the data 'IRE'
-lam <- 100 # tuning parameter for the annaul data
+lam <- 100 # tuning parameter for the annual data
 
 # raw HP filter
 bx_HP <- BoostedHP(IRE, lambda = lam, iter= FALSE)
 
 # by BIC
-bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "BIC")
+bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "BIC")
 
 # by ADF
-bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf")
+bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "adf")
 
-# by none test type
+# If stopping = "nonstop",
 # Iterated HP filter until Max_Iter and keep the path of BIC.
 
-bx_none <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "none")
-
+bx_nonstop <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "nonstop")
 }
 \references{
 Phillips, Peter CB, and Zhentao Shi.

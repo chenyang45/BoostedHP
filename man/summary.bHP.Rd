@@ -2,45 +2,47 @@
 % Please edit documentation in R/summary.bHP.R
 \name{summary.bHP}
 \alias{summary.bHP}
-\title{Summary method for class 'bHP'}
+\title{Summary method for class \code{bHP}}
 \usage{
 \method{summary}{bHP}(x, digit = 8)
 }
 \arguments{
-\item{x}{an object of class "bHP"}
+\item{x}{an object of class \code{bHP}}
 
-\item{digit}{controls the number of significant digits to print when printing numeric values. It is a suggestion only. Valid values are 1...22 with default 8. See the note in 'print.default' about values greater than 15.}
+\item{digit}{controls the number of significant digits to print when printing
+numeric values. It is a suggestion only. Valid values are 1...22 with
+default 8. See the note in 'print.default' about values greater than 15.}
 }
 \value{
-summary of raw dta, trend component, iterated number, p-value ...
+summary of raw data, trend component, the number of iterations, p-value, etc.
 }
 \description{
-table of the summary special for class 'bHP'.
+tables that summarize a \code{bHP} object.
 }
 \examples{
-lam <- 100 # tuning parameter for the annaul data
+lam <- 100 # tuning parameter for the annual data
 
-data(IRE) # laod the data 'IRE'
+data(IRE) # load the data 'IRE'
 
 # raw HP filter
 bx_HP <- BoostedHP(IRE, lambda = lam, iter= FALSE)
 
 # by BIC
-bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "BIC")
+bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "BIC")
 
 # by ADF
-bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf")
+bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "adf")
 
-# by none test type
+# by nonstop test type
 # Iterated HP filter until Max_Iter and keep the path of BIC.
 
-bx_none <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "none")
+bx_nonstop <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "nonstop")
 
 #--------- start to summary the content of bHP -----------------
 
 summary(bx_ADF)
 summary(bx_BIC)
-summary(bx_none)
+summary(bx_nonstop)
 summary(bx_HP)
 
 }

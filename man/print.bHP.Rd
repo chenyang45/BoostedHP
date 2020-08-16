@@ -11,44 +11,60 @@
 \arguments{
 \item{x}{an object of class 'bHP'}
 
-\item{type}{a character string that specifies what style of print. Default choose is "bHP" showing designed table of class 'bHP'; choose "generic default" if you want to show the result of generic function plot.}
+\item{type}{a character string that specifies what style of print. Default
+choose is "bHP" showing designed table of class 'bHP'; choose "generic
+default" if you want to show the result of generic function plot.}
 
-\item{trend_hist}{logical; if TRUE, adding trend component after each HP-filter conduction into the table and call 'select_trend_hist' to choose which iteration; if FALSE, don't add trend conponent history to the table.}
+\item{trend_hist}{logical; if TRUE, adding trend component after each
+HP-filter conduction into the table and call 'select_trend_hist' to choose
+which iteration; if FALSE, don't add trend component history to the table.}
 
-\item{select_trend_hist}{a numeric vector choosing which iteration time to show in the trend component history. It is valid only when 'trend_hist' is TRUE.}
+\item{select_trend_hist}{a numeric vector choosing which iteration time to
+show in the trend component history. It is valid only when 'trend_hist' is
+TRUE.}
 
-\item{Head}{logical; if TRUE, showing the head of the table; if FALSE and 'Tail' is TRUE, showing the tail of the table; if FALSE and 'Tail' is FALSE, showing the full-length of the table.}
+\item{Head}{logical; if TRUE, showing the head of the table; if FALSE and
+'Tail' is TRUE, showing the tail of the table; if FALSE and 'Tail' is FALSE,
+showing the full-length of the table.}
 
-\item{Tail}{logical; if TRUE, showing the tail of the table; if FALSE and 'Head' is TRUE, showing the head of the table; if FALSE and 'Head' is FALSE, showing the full-length of the table.}
+\item{Tail}{logical; if TRUE, showing the tail of the table; if FALSE and
+'Head' is TRUE, showing the head of the table; if FALSE and 'Head' is FALSE,
+showing the full-length of the table.}
 
-\item{print_type}{a character vector that specifies what type of output the command should produce. The possible values are "text" (default) for ASCII text output, "latex" for LaTeX code, "html" for HTML/CSS code.}
+\item{print_type}{a character vector that specifies what type of output the
+command should produce. The possible values are "text" (default) for ASCII
+text output, "latex" for LaTeX code, "html" for HTML/CSS code.}
 
-\item{digit}{controls the number of significant digits to print when printing numeric values. It is a suggestion only. Valid values are 1...22 with default 8. See the note in 'print.default' about values greater than 15.}
+\item{digit}{controls the number of significant digits to print when printing
+numeric values. It is a suggestion only. Valid values are 1...22 with
+default 8. See the note in 'print.default' about values greater than 15.}
 }
 \value{
-Table showing the content of bHP, "text" (default) for ASCII text output, "latex" for LaTeX code, "html" for HTML/CSS code.
+Table showing the content of bHP, "text" (default) for ASCII text
+ output, "latex" for LaTeX code, "html" for HTML/CSS code.
 }
 \description{
-table of the bHP, in text (ASCII text output), latex (LaTeX code) or html (HTML/CSS code).
+table of the bHP, in text (ASCII text output), latex (LaTeX code) or html
+(HTML/CSS code).
 }
 \examples{
-lam <- 100 # tuning parameter for the annaul data
+lam <- 100 # tuning parameter for the annual data
 
-data(IRE) # laod the data 'IRE'
+data(IRE) # load the data 'IRE'
 
 # raw HP filter
 bx_HP <- BoostedHP(IRE, lambda = lam, iter= FALSE)
 
 # by BIC
-bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "BIC")
+bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "BIC")
 
 # by ADF
-bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf")
+bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "adf")
 
-# by none test type
+# by nonstop test type
 # Iterated HP filter until Max_Iter and keep the path of BIC.
 
-bx_none <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "none")
+bx_nonstop <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "nonstop")
 
 #--------- start to print the content of bHP -----------------
 print(bx_ADF)
@@ -72,6 +88,4 @@ print(bx_BIC, Head = F, Tail = T, trend_hist = F, print_type = "html")
 
 # show the generic print function output
 print(bx_ADF, type = "generic default")
-
-
 }
