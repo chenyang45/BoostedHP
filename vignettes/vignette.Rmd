@@ -15,15 +15,14 @@ knitr::opts_chunk$set(
 ```
 
 
-
-
 ```{r setup}
 library(bHP)
 ```
 
 ## HP filter
 
-Given time series data $(x_{t})_{t=1}^n$
+The Hodrick-Prescott filter (HP filter; Hodrick and Prescott, 1997) is one of the fundamental statistical 
+tools. Given time series data $(x_{t})_{t=1}^n$
 the HP method decomposes the series into
 two additive components --- a trend component $f_{t}$
 and a residual or cyclical component $c_{t}$, estimated as
@@ -39,15 +38,9 @@ and a residual or cyclical component $c_{t}$, estimated as
  where $\Delta f_{t}=f_{t}-f_{t-1}$,
 and $\Delta^2 f_{t}= \Delta f_{t}- \Delta f_{t-1} = f_{t}- 2 f_{t-1} + f_{t-2}$,
 and $\lambda\geq 0$
-is a tuning parameter that controls the extent of the penalty.
+is a tuning parameter that controls the extent of the penalty. The choice of the tuning parameter is crucial for the behavior of the HP filter. 
 
-
-
-
-## Boosted HP filter
-
-
-In the HP case, if $D'$ is the rectangular $\left(n-2\right)\times n$ matrix
+If $D'$ is the rectangular $\left(n-2\right)\times n$ matrix
 with second differencing vector $d=\begin{pmatrix}1 & -2 & 1\end{pmatrix}'$ along
 the leading tri-diagonals and  $I_{n}$ is the $n\times n$ identity
 matrix, the explicit form of the trend solution is
@@ -62,17 +55,12 @@ trend and
 \]
 as the estimated cyclical or stationary component. 
 
+In practice, Hodrick and Prescott (1997) recommend $\lambda=1600$ for quarterly data, and this number and its sampling frequency adjusted version (Ravn and Uhlig, year) are widely adopted in applications. However, recent research (Phillips and Jin, 2015; Hamilton 2018) find the "gold standard" is unsatisfactory for the length of time series that often encountered in macroeconomic studies.
 
-The problem of consistent HP filter estimation of the trend then amounts to whether as $n \to \infty$ we have 
-$ \frac{\widehat{f}_{\left\lfloor nr\right\rfloor }^{\mathrm{HP}}}{\sqrt{n}} \rightsquigarrow B(r)$, 
-in which case the filter asymptotically captures the underlying stochastic process trend in $x_t$. PJ show that this reproduction of the asymptotic form of the trend holds only under special restrictions on the smoothing parameter $\lambda$ that ensure it does not diverge too quickly. In particular, if  $\lambda = O(n^4)$ or greater as $n \to \infty$, then the HP filter trend 
-$ \widehat{f}_{\left\lfloor nr\right\rfloor }^{\mathrm{HP}}$
- is inconsistent. In such cases, 
-$\frac{\widehat{f}_{\left\lfloor nr\right\rfloor }^{\mathrm{HP}}}{\sqrt{n}} \rightsquigarrow f^{\mathrm{HP}}\left(r\right)$ 
-where $f^{\mathrm{HP}}\left(r\right)$ is a smooth stochastic process different from $B(r)$, which implies that the cyclical component $\widehat{c}^{\mathrm{HP}}=x-\widehat{f}^{\mathrm{HP}}$ inevitably inherits elements of the stochastic trend even in the limit. Similar issues arise in the case of time series with stochastic trends coupled with deterministic drift or deterministic drift with breaks (see PJ for details). In all these cases, the HP filter fails to recover the underlying trend in $x_t$ asymptotically. The limit theory therefore confirms much informal commentary in the literature concerning the shortcomings of the HP filter as a suitable trend determination mechanism for economic data.     
 
-We propose an easy remedy to establish consistent estimation of stochastic process and deterministic trends in the data. If the cyclical component $\widehat{c}_{t}^{\mathrm{HP}}$ still exhibits
-trending behavior after HP filtering, we continue to apply the HP filter to
+## Boosted HP filter
+
+Phillips and Shi (2019) propose the boosted HP filter (bHP). The intuition is that, if the cyclical component $\widehat{c}_{t}^{\mathrm{HP}}$ still exhibits trending behavior after HP filtering, we continue to apply the HP filter to
 $\widehat{c}^{\mathrm{HP}}$ to remove the leftover trend residual. After a second fitting, the cyclical component can be written as
 \[
 \widehat{c}^{\left(2\right)}=\left(I_{n}-S\right)\widehat{c}^{\mathrm{HP}}=\left(I_{n}-S\right)^{2}x,
@@ -88,33 +76,34 @@ After $m$ repeated applications of the filter, the cyclical and trend component 
 	\widehat{c}^{\left(m\right)}  =  \left(I_{n}-S\right)\widehat{c}^{\left(m-1\right)}=\left(I_{n}-S\right)^{m}x \\
 	\widehat{f}^{\left(m\right)}  =  x-\widehat{c}^{\left(m\right)}=B_{m}x, 
 \]
-where $B_{m}=I_{n}-\left(I_{n}-S\right)^{m}.$ We call
-this iterated process the \emph{boosted HP filter} or bHP in view of its similarity to $L_{2}$-boosting in terms of  
-numerical implementation.
+where $B_{m}=I_{n}-\left(I_{n}-S\right)^{m}.$
 
+The boosted HP filter introduces the number of iterations $m$ as an additional tuning parameter. In practice, it is recommended that we choose $\lambda$ according to the convention, say $\lambda = 1600$ for quarterly data, and then monitor a stopping criterion as the iteration proceeds. Phillips and Shi (2019) suggest using either the ADF test or the BIC as the stopping criterion. 
+
+This package `bHP` automates the boosted HP filter. The main function is named `BoostedHP`. 
+The user chooses the two tuning parameters `lambda` for $\lambda$ and `stopping` for the stopping criterion. In particular, `stopping` has three options:
+
+* `BIC` for the BIC stopping criterion
+* `adf` for the ADF stopping criterion (default $p$-value is 5\%)
+* `nonstop` keeps iteration until it reaches `Max_iter` (default is 100 iterations).
 
 
 ## Examples
 
+```{r}
+lam <- 100 # tuning parameter for the annual data
+data(IRE) # load the data 'IRE'
+
+bx_HP <- BoostedHP(IRE, lambda = lam, iter= FALSE)$cycle
+bx_BIC <- BoostedHP(IRE, lambda = lam, stopping = "BIC")$cycle
+bx_ADF <- BoostedHP(IRE, lambda = lam, stopping = "adf")$cycle
+
+bx_nonstop <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "nonstop") %>% residuals()
+
+matplot( cbind(IRE, bx_HP, bx_BIC, bx_ADF, bx_nonstop))
+```
+
 ```{r, eval=FALSE}
-lam <- 100 # tuning parameter for the annaul data
-
-data(IRE) # laod the data 'IRE'
-
-# raw HP filter
-bx_HP <- BoostedHP(IRE, lambda = lam, iter= FALSE)
-
-# by BIC
-bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "BIC")
-
-# by ADF
-bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf")
-
-# by none test type
-# Iterated HP filter until Max_Iter and keep the path of BIC.
-
-bx_none <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "none")
-
 #-------- plot -----------
 
 ?plot.bHP
@@ -130,7 +119,7 @@ plot(bx_ADF, iteration_location = c(30,12)) # assign the location of text by x-y
 
 plot(bx_BIC, interval_t = 0.8 ) # change the time interval of animation
 
-plot(bx_none, cex_legend = 2, cex_text = 3) # change the magnification of legend and text
+plot(bx_nonstop, cex_legend = 2, cex_text = 3) # change the magnification of legend and text
 
 # change the color
 plot(bx_ADF,main = "dynamic graph with new color",col_raw = "#685F74", col_trend_h = "#39A1A8", col_trend_f = "#DD4B4F", col_pvalue_BIC = "#E96145")
@@ -138,7 +127,7 @@ plot(bx_ADF,main = "dynamic graph with new color",col_raw = "#685F74", col_trend
 plot(bx_ADF,main = "dynamic graph with new trancparency setting",raw_alpha = 200, trend_h_alpha = 55, trend_f_alpha = 250, pvalue_BIC_alpha = 250)
 
 plot(bx_HP)
-# none-iter' bHP doesn't have dynamic picture: returning NA
+# nonstop-iter' bHP doesn't have dynamic picture: returning NA
 
 #--------- for JS style ----------
 
@@ -149,7 +138,7 @@ plot(bx_ADF,plot_type = "JS",main = "Js graph with new color", col_raw = "#685F7
 
 plot(bx_BIC,plot_type = "JS")
 
-plot(bx_none,plot_type = "JS")
+plot(bx_nonstop,plot_type = "JS")
 
 plot(bx_HP,plot_type = "JS")
 
@@ -161,7 +150,7 @@ plot(bx_HP,plot_type = "static")
 
 plot(bx_BIC,plot_type = "static",cex_legend = 0.7, cex_text = 0.8 )
 
-plot(bx_none,plot_type = "static",cex_legend = 0.8, cex_text = 0.8 )
+plot(bx_nonstop,plot_type = "static",cex_legend = 0.8, cex_text = 0.8 )
 
 #----------- print -------------------------------
 
@@ -198,7 +187,7 @@ print(bx_ADF, type = "generic default")
 
 summary(bx_ADF)
 summary(bx_BIC)
-summary(bx_none)
+summary(bx_nonstop)
 summary(bx_HP)
 
 #------------------ predict -----------------
@@ -211,7 +200,7 @@ predict(bx_ADF) #Iterated number of HP filter: 19
 
 predict(bx_BIC) #Iterated number of HP filter: 5
 
-predict(bx_none) #Iterated number of HP filter: 99
+predict(bx_nonstop) #Iterated number of HP filter: 99
 
 
 #------------------ residuals -----------------
@@ -233,9 +222,9 @@ BIC(bx_BIC)
 #Keep the path of BIC till iterated 6 times to show the tuning point.
 #[1] 1.586255 1.366335 1.293931 1.264323 1.254397 1.254620
 
-BIC(bx_none)
+BIC(bx_nonstop)
 
-#Retrun the BIC path of none.
+#Retrun the BIC path of nonstop.
 #Iterated number of HP filter: 99
 #Keep the path of BIC till iterated 100 times to show the tuning point.
 #[1] 1.586255 1.366335 1.293931 1.264323 1.254397 1.254620 1.260345 1.269139 1.279670 1.291179
@@ -248,14 +237,14 @@ BIC(bx_none)
 BIC(bx_HP)
 
 # Error in BIC.bHP(bx_HP) :
-# The stationary test type is none-iter, not BIC or none.
+# The stationary test type is nonstop-iter, not BIC or nonstop.
 
 
 # by ADF
 BIC(bx_ADF)
 
 #Error in BIC.bHP(bx_ADF) :
-#The stationary test type is adf, not BIC or none.
+#The stationary test type is adf, not BIC or nonstop.
 
 ```
 
