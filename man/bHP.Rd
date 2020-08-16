@@ -4,12 +4,12 @@
 \name{bHP}
 \alias{bHP}
 \alias{bHP-package}
-\title{BoostedHP: Package for the boosted HP filter}
+\title{bHP: Package for the boosted HP filter}
 \description{
-Iterated HP filtering by Phillips and Shi (2019)
+The boosted HP filter by Phillips and Shi (2019)
 }
 \details{
-\code{BoostedHP} is the main function. It genereates a \code{bHP} object that can work with
+\code{BoostedHP} is the main function. It generates a \code{bHP} object which can work with
 generic methods.
 }
 \references{
