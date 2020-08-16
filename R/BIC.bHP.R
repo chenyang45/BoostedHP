@@ -1,36 +1,31 @@
 #' BIC.bHP
 #'
-#' Extract the path of BIC value of each iterated BIC HP-filter conduction for class 'bHP'.
-#' As 'none' type of bHP also keep BIC for each iteration time till the max_iter, BIC.bHP method also
-#' return BIC value for 'none' bHP.
+#' Extract the path of BIC value of each iterated BIC HP-filter conduction for
+#' class \code{bHP}. As \code{nonstop} type of bHP also keeps BIC for each iteration time till
+#' the \code{Max_iter}, BIC.bHP method returns BIC value for it as well.
 #'
-#' @param x an object of class "bHP"
+#' @param x an object of class \code{bHP}
 #'
-#' @return a vector recording BIC after each iterated HP-filter coonduction.
+#' @return a vector recording BIC after each iteration of bHP.
+#'
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' lam <- 100 # tuning parameter for the annaul data
+#' lam <- 100 # tuning parameter for the annual data
 #'
-#' data(IRE) # laod the data 'IRE'
+#' data(IRE) # load the data 'IRE'
 #'
 #' # by BIC
 #'
-#' bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "BIC")
+#' bx_BIC <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "BIC")
 #'
 #' BIC(bx_BIC)
 #'
 #'
-#' bx_none <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "none")
+#' bx_none <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "nonstop")
 #'
 #' BIC(bx_none)
 #'
-#' #Retrun the BIC path of none.
-#' #Iterated number of HP filter: 99
-#' #Keep the path of BIC till iterated 100 times to show the tuning point.
-#' #[1] 1.586255 1.366335 1.293931 1.264323 1.254397 1.254620 1.260345 1.269139 1.279670 1.291179
-#' #[11] 1.303223 ...
 #'
 #'
 #' ### If the test type is not "adf", Pvalue.bHP will return error
@@ -46,31 +41,26 @@
 #'
 #'
 #' # by ADF
-#' bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, test_type = "adf")
+#' bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "adf")
 #'
 #' BIC(bx_ADF)
 #'
 #' #Error in BIC.bHP(bx_ADF) :
 #' #The stationary test type is adf, not BIC or none.
-#' }
-
+#'
 BIC.bHP <- function(x){
 
-  if(x$test_type == "BIC" | x$test_type == "none"){
+  if(x$stopping == "BIC" | x$stopping == "nonstop"){
 
-  message("Retrun the BIC path of ", x$test_type, ".")
-  message("Iterated number of HP filter: ",x$iter_num)
-  message("Keep the path of BIC till iterated ", (x$iter_num+1), " times to show the tuning point.")
+    message("Retrun the BIC path of ", x$stopping, ".")
+    message("Number of iterations: ",x$iter_num)
+    message("Keep the path of BIC till iterated ", (x$iter_num+1), " times.")
 
-  #print(x$BIC_hist)
-
-  return(x$BIC_hist)
-
+    return(x$BIC_hist)
   }
   else {
-    # stop("The stationary test type is ",x$test_type, ", not BIC or none.")
-    message("The stationary test type is ",x$test_type, ", not BIC or none.")
-    }
+    message("The stopping criterion is not BIC.")
+  }
 }
 
 
