@@ -3,13 +3,14 @@
 #' All in one function of conducting the boosted HP-filter.
 #'
 #' @param x is a raw time series to be filtered.
-#' @param lambda the turning parameter, default value is 1600, as recommended by Hodrick-Prescott for quarterly data.
+#' @param lambda the turning parameter, default value is 1600,
+#'   as recommended by Hodrick and Prescott (1997) for quarterly data.
 #' @param iter logical, \code{TRUE} (default) to conduct the boosted HP filter.
 #'   FALSE does not iterated, which is exactly the original HP filter.
-#' @param stopping stopping criterion. \code{"adf"}, or \code{"BIC"} (default), or \code{"nonstop"} means keeping
+#' @param stopping stopping criterion. \code{"BIC"} (default), or \code{"adf"}, or \code{"nonstop"} means keeping
 #'    iteration until the maximum number of iteration, specified by \code{Max_Iter} is reached.
-#' @param sig_p a threshold of the p-value for the ADF test, with (default) value is 0.050.
-#'    Only effective when \code{stopping = adf}.
+#' @param sig_p a threshold of the p-value for the ADF test, with default value 0.050.
+#'    Only effective when \code{stopping = "adf"}.
 #' @param Max_Iter maximal number of iterations. The default is 100.
 #'
 #' @return The function returns a list containing the following items:
@@ -21,13 +22,29 @@
 #' \item{adf_p_hist}{The path of the ADF test p-value up to the final iteration.}
 
 #' @details
-#' See the math formulas in the vignette.
+#'
+#' This is the main function of implementing the boosted HP filter (Phillisp and
+#' Shi, 2019). The arguments accommendate the orginal HP filter (\code{iter =
+#' FALSE}), the boosted HP filter with the BIC stopping criterion (\code{stopping =
+#' "BIC"}),
+#' or ADF test stopping criterion
+#' (\code{stopping = "adf"}),  or keep going until the maximum number of iterations is reached
+#' (\code{stopping = "nonstop"}).
+#'
+#' Either the original HP filter or the bHP filter requires \code{lambda} to
+#' control the strength of the weak learner for in-sample fitting. The default
+#' is \code{lambda = 1600}, which is recommended by Hodrick and Prescott (1997)
+#' for quarterly data. \code{lambda} should be adjusted for different
+#' frequencies. For example, \code{lambda = 129600} for monthly data and
+#' \code{lambda = 6.25} for annual data.
+#'
+#' See the vignette with a brief introduction of the idea of bHP.
 #'
 #' @references
 #'
-#' Phillips, Peter CB, and Zhentao Shi.
-#' "Boosting: Why you can use the hp filter."
-#' arXiv: 1905.00175, Cowles Foundation Discussion Paper No.2192, (2019).
+#' Phillips, Peter CB, and Zhentao Shi. "Boosting: Why you can use the hp
+#' filter." arXiv: 1905.00175, Cowles Foundation Discussion Paper No.2192,
+#' (2019).
 #'
 #'
 #' @export
@@ -51,6 +68,7 @@
 #' # Iterated HP filter until Max_Iter and keep the path of BIC.
 #'
 #' bx_nonstop <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "nonstop")
+
 
 BoostedHP <- function(x, lambda = 1600, iter= TRUE, stopping = "BIC", sig_p = 0.050, Max_Iter = 100) {
 

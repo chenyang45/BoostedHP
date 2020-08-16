@@ -10,16 +10,17 @@ BoostedHP(x, lambda = 1600, iter = TRUE, stopping = "BIC",
 \arguments{
 \item{x}{is a raw time series to be filtered.}
 
-\item{lambda}{the turning parameter, default value is 1600, as recommended by Hodrick-Prescott for quarterly data.}
+\item{lambda}{the turning parameter, default value is 1600,
+as recommended by Hodrick and Prescott (1997) for quarterly data.}
 
 \item{iter}{logical, \code{TRUE} (default) to conduct the boosted HP filter.
 FALSE does not iterated, which is exactly the original HP filter.}
 
-\item{stopping}{stopping criterion. \code{"adf"}, or \code{"BIC"} (default), or \code{"nonstop"} means keeping
+\item{stopping}{stopping criterion. \code{"BIC"} (default), or \code{"adf"}, or \code{"nonstop"} means keeping
 iteration until the maximum number of iteration, specified by \code{Max_Iter} is reached.}
 
-\item{sig_p}{a threshold of the p-value for the ADF test, with (default) value is 0.050.
-Only effective when \code{stopping = adf}.}
+\item{sig_p}{a threshold of the p-value for the ADF test, with default value 0.050.
+Only effective when \code{stopping = "adf"}.}
 
 \item{Max_Iter}{maximal number of iterations. The default is 100.}
 }
@@ -36,7 +37,22 @@ The function returns a list containing the following items:
 All in one function of conducting the boosted HP-filter.
 }
 \details{
-See the math formulas in the vignette.
+This is the main function of implementing the boosted HP filter (Phillisp and
+Shi, 2019). The arguments accommendate the orginal HP filter (\code{iter =
+FALSE}), the boosted HP filter with the BIC stopping criterion (\code{stopping =
+"BIC"}),
+or ADF test stopping criterion
+(\code{stopping = "adf"}),  or keep going until the maximum number of iterations is reached
+(\code{stopping = "nonstop"}).
+
+Either the original HP filter or the bHP filter requires \code{lambda} to
+control the strength of the weak learner for in-sample fitting. The default
+is \code{lambda = 1600}, which is recommended by Hodrick and Prescott (1997)
+for quarterly data. \code{lambda} should be adjusted for different
+frequencies. For example, \code{lambda = 129600} for monthly data and
+\code{lambda = 6.25} for annual data.
+
+See the vignette with a brief introduction of the idea of bHP.
 }
 \examples{
 
@@ -58,7 +74,7 @@ bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "adf")
 bx_nonstop <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "nonstop")
 }
 \references{
-Phillips, Peter CB, and Zhentao Shi.
-"Boosting: Why you can use the hp filter."
-arXiv: 1905.00175, Cowles Foundation Discussion Paper No.2192, (2019).
+Phillips, Peter CB, and Zhentao Shi. "Boosting: Why you can use the hp
+filter." arXiv: 1905.00175, Cowles Foundation Discussion Paper No.2192,
+(2019).
 }
