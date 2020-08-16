@@ -1,7 +1,7 @@
 Package: bHP
 Type: Package
 Title: Iterative HP-filter refitting
-Version: 0.0.6
+Version: 0.0.7
 Authors@R: c(
     person("Yang", "Chen", role = c("aut", "cre"), email = "chen_yang@link.cuhk.edu.hk"),
     person("Zhentao", "Shi", role = c("aut"), email = "shizhentao@gmail.com" )
