@@ -4,7 +4,7 @@ author: "Yang Chen and Zhentao Shi"
 date: \today
 output:
   rmarkdown::pdf_document: default
-  # rmarkdown::html_vignette: default
+  '# rmarkdown::html_vignette': default
 description: nothing
 geometry: margin=1in
 bibliography: REFERENCES.bib
@@ -14,6 +14,12 @@ fontsize: 12pt
 urlcolor: blue
 vignette: |
   %\VignetteIndexEntry{my-vignette} %\VignetteEngine{knitr::rmarkdown} %\VignetteEncoding{UTF-8}
+header-includes:
+- \usepackage{graphics}
+- \usepackage{pgfplots}
+- \usepackage{caption}
+- \usepackage{setspace}
+- \singlespacing
 ---
 
 ```{r, include = FALSE}
@@ -24,57 +30,68 @@ knitr::opts_chunk$set(
 ```
 
 
+\begin{figure}[h]
+\centering
+\includegraphics[width = 13cm]{bHP_illustration}
+\caption*{Illustartion of bHP, by Iris Shi}
+\end{figure}
+
+
 ```{r setup}
 library(bHP)
+library(magrittr)
 ```
 
 ## Introduction
 
-The Hodrick-Prescott filter (HP filter; @hodrick1997postwar) is one of the fundamental statistical 
-tools in macroeconomic data analysis. 
-Since it was proposed in 1982 in a working paper by Hodrick and Prescott, it has been widely used in empirical
-macroeconomics thanks to its simplicity. As an operational algorithm, its pros and cons have been debated over
-decades, and recently we have witnessed renewed academic interest in its properties and extensions. 
 This vignette introduces the HP filter, the boosted HP filter, and the usage of the R package
 `bHP`. 
+The Hodrick-Prescott filter (HP filter; @hodrick1997postwar) is one of the fundamental statistical 
+tools in macroeconomic data analysis. 
+Thanks to its simplicity, it has been widely used in empirical
+macroeconomics studies. As an operational algorithm, its pros and cons have been debated over
+decades, and recently we have witnessed renewed academic interest in its properties and extensions. 
+While @hamilton2017you argues against the usage of the HP filter, @Phillips2019boosting propose a
+machine learning version of the HP filter, called the boosted HP filter (bHP), to strength its flexibility
+with theoretical guarantee for a large class of trended time series in macroeconomic 
+applications.
+
 
 ## HP filter
 
-Given time series data $(x_{t})_{t=1}^n$
-the HP method decomposes the series into
-two additive components --- a trend component $f_{t}$
-and a residual or cyclical component $c_{t}$, estimated as
+Given a time series $(x_{t})_{t=1}^n$
+the HP method decomposes it into
+two additive components: a trend component $f_{t}$
+and a cyclical component (residual) $c_{t}$. The trend is estimated as
 \[
-(\hat{f}_{t}^{HP} )
- =\arg\min_{ (f_{t} )}  \{ \sum_{t=1}^{n} (x_{t}-f_{t} )^{2}
- +\lambda\sum_{t=2}^{n} (\Delta^ 2 f_{t}  )^{2} \},
+(\hat{f}_{t}^\mathrm{HP} )
+ =\arg\min_{ (f_{t} )}  \left\{ \sum_{t=1}^{n} (x_{t}-f_{t} )^{2}
+ +\lambda\sum_{t=2}^{n} (\Delta^ 2 f_{t}  )^{2} \right\},
 \]
- and
-\[
-(\hat{c}_{t}^{HP} )=( x_t-\hat{f}_{t}^{HP}) 
-\]
- where $\Delta f_{t}=f_{t}-f_{t-1}$,
+where $\Delta f_{t}=f_{t}-f_{t-1}$,
 and $\Delta^2 f_{t}= \Delta f_{t}- \Delta f_{t-1} = f_{t}- 2 f_{t-1} + f_{t-2}$,
 and $\lambda\geq 0$
-is a tuning parameter that controls the extent of the penalty. The choice of the tuning parameter is crucial for the behavior of the HP filter. 
-
-If $D'$ is the rectangular $\left(n-2\right)\times n$ matrix
-with second differencing vector $d=\begin{pmatrix}1 & -2 & 1\end{pmatrix}'$ along
-the leading tri-diagonals and  $I_{n}$ is the $n\times n$ identity
-matrix, the explicit form of the trend solution is
-\begin{equation} \label{tt1}
-\widehat{f}^{\mathrm{HP}}=Sx,
-\end{equation}
-where $S=\left(I_n+\lambda DD'\right)^{-1}$ is a deterministic operator and $x=(x_1,...,x_n)'$ is the sample data.
-The smoothed component $\widehat{f}^{\mathrm{HP}}$ is interpreted as the estimated 
-trend and 
+is a tuning parameter that controls the extent of the penalty.
+The corresponding cycle is 
 \[
-\widehat{c}^{\mathrm{HP}}=x-\widehat{f}^{\mathrm{HP}}=\left(I_{n}-S\right)x
+(\hat{c}_{t}^\mathrm{HP} )=( x_t-\hat{f}_{t}^\mathrm{HP}) 
 \]
-as the estimated cyclical or stationary component. 
 
-In practice, @hodrick1997postwar recommend $\lambda=1600$ for quarterly data, and this number and its sampling frequency adjusted version @ravn2002adjusting are widely adopted in applications. However, recent research 
-(@phillips2015business; hamilton2017you) find the "gold standard" is unsatisfactory for the length of time series that often encountered in macroeconomic studies.
+The optimization problem admits a closed form solution. 
+The estimated trend can be written as
+\begin{equation}
+\widehat{f}^{\mathrm{HP}}=S x,
+\end{equation}
+where $S$ is a deterministic $n\times n$ matrix and $x=(x_1,...,x_n)'$ is the sample data, and   the estimated 
+trend is
+\[
+\widehat{c}^{\mathrm{HP}}=\left(I_{n}-S\right)x,
+\]
+where $I_{n}$ is the $n\times n$ identity matrix. The explicit form of $S$ can be found in @Phillips2019boosting.
+
+The choice of the tuning parameter is crucial for the behavior of the HP filter. 
+In practice, @hodrick1997postwar recommend $\lambda=1600$ for quarterly data, and this number and its sampling frequency adjusted version [@ravn2002adjusting] are widely adopted. However, recent research 
+[@phillips2015business] [@hamilton2017you] find the "gold standard" is too rigid for the length of time series that often used in macroeconomic studies.
 
 
 ## Boosted HP filter
@@ -91,22 +108,32 @@ filter is fitted twice. The corresponding trend component becomes
 \]
 If $\widehat{c}^{\left(2\right)}$ continues to exhibit trend behavior, the filtering process may be continued for a third or further time. 
 After $m$ repeated applications of the filter, the cyclical and trend component are 
-\[
-	\widehat{c}^{\left(m\right)}  =  \left(I_{n}-S\right)\widehat{c}^{\left(m-1\right)}=\left(I_{n}-S\right)^{m}x \\
-	\widehat{f}^{\left(m\right)}  =  x-\widehat{c}^{\left(m\right)}=B_{m}x, 
-\]
-where $B_{m}=I_{n}-\left(I_{n}-S\right)^{m}.$
+\begin{eqnarray}
+	\widehat{c}^{\left(m\right)} & = &  \left(I_{n}-S\right)\widehat{c}^{\left(m-1\right)}=\left(I_{n}-S\right)^{m}x \\
+	\widehat{f}^{\left(m\right)} & = & x-\widehat{c}^{\left(m\right)}.
+\end{eqnarray}
 
-The boosted HP filter introduces the number of iterations $m$ as an additional tuning parameter. In practice, it is recommended that we choose $\lambda$ according to the convention, say $\lambda = 1600$ for quarterly data, and then monitor a stopping criterion as the iteration proceeds. Phillips and Shi (2019) suggest using either the ADF test or the BIC as the stopping criterion. 
+The boosted HP filter introduces the number of iterations $m$ as an additional tuning parameter. In practice, it is recommended that we choose $\lambda$ according to the convention, say $\lambda = 1600$ for quarterly data, and then monitor a stopping criterion as the iteration proceeds. @Phillips2019boosting suggest using either the ADF test or the Bayesian Information Criterion (BIC) to terminate the iteration.
 
-This package `bHP` automates the boosted HP filter. The main function is named `BoostedHP`. 
+This package `bHP` automates the boosted HP filter. The main function is `BoostedHP`. 
 The user chooses the two tuning parameters `lambda` for $\lambda$ and `stopping` for the stopping criterion. In particular, `stopping` has three options:
 
 * `BIC` for the BIC stopping criterion
-* `adf` for the ADF stopping criterion (default $p$-value is 5\%)
+* `adf` for the ADF stopping criterion (default $p$-value 5\%)
 * `nonstop` keeps iteration until it reaches `Max_iter` (default is 100 iterations).
 
+The basic usage with the default options is as follows:
+```{r, eval=FALSE}
+BoostedHP(x, lambda = 1600, iter= TRUE, stopping = "BIC", Max_Iter = 100)
+```
+The above line produces an object of  the `bHP` class. We can extract the trend by `$trend`, the 
+cycle by `$cycle`. The sequence of trend for each iteration is stored in `$trend_hist`, 
+and `$iter_num` reports the number of iterations.
+
 ## Examples
+
+One of the applications in a series in @Phillips2019boosting is concerning the 
+international comparison of the Okun's law. We use Ireland's annual GDP there for illustration. 
 
 ```{r, message=FALSE}
 lam <- 100 # tuning parameter for the annual data
@@ -116,11 +143,12 @@ bx_HP <- BoostedHP(IRE, lambda = lam, iter= FALSE)$trend
 bx_BIC <- BoostedHP(IRE, lambda = lam, stopping = "BIC")$trend
 bx_ADF <- BoostedHP(IRE, lambda = lam, stopping = "adf")$trend
 bx_nonstop <- BoostedHP(IRE, lambda = lam, iter= TRUE, 
-                        stopping = "nonstop")$trend
+                        stopping = "nonstop") %>% predict( )
+# use the generic method `predict` is an alternative way to get the trend
 
 matplot( y = cbind(IRE, bx_HP, bx_BIC, bx_ADF, bx_nonstop), 
-         type = "l", x = 1981:2016,
-         ylab = "value", xlab = "year", main = "Ireland Annual GDP")
+         type = "l", x = 1981:2016, ylab = "data and trends", 
+         xlab = "year", main = "Ireland Annual GDP")
 legend("bottomright", legend = c("data","HP", "BIC", "ADF", "nonstop"), 
        col = 1:5, lty = 1:5)
 ```
@@ -132,6 +160,14 @@ bx <- BoostedHP(IRE, lambda = lam, stopping = "BIC")
 IRE_trend <- predict(bx)
 IRE_cycle <- residuals(bx)
 ```
+
+## Version
+
+This is the two authors first R package released on `github`, labeled with Version 1.0. 
+The main function `BoostedHP` and associated methods `predict`, `residual` and `BIC` are complete and 
+well documented. 
+The package also contains a few experimental generic methods `print`, `plot` and `summary`, 
+which are still preliminary. 
 
 
 ```{r, eval=FALSE, echo=FALSE}
