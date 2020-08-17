@@ -33,7 +33,7 @@ knitr::opts_chunk$set(
 \begin{figure}[h]
 \centering
 \includegraphics[width = 12cm]{bHP_illustration}
-\caption*{Illustartion of bHP, by Iris Shi}
+\caption*{Illustration of bHP, by Iris Shi}
 \end{figure}
 
 
