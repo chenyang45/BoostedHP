@@ -29,9 +29,3 @@ See the [vignette](https://github.com/chenyang45/BoostedHP/blob/master/vignettes
 ![image](https://github.com/chenyang45/BoostedHP/blob/master/ADF_bHP_ani.gif)
 
 Dynamic demonstration, by Chen Yang
-
-
-
-![image](https://github.com/chenyang45/BoostedHP/blob/master/vignettes/bHP_illustration.jpg)
-
-Artist's impression, by Iris Shi
