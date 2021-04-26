@@ -29,7 +29,7 @@ NULL
 #'  \item\strong{Date Range:} {1981--2016}
 #' }
 #'
-#' @section Descripton:
+#' @section Description:
 #' This dataset is described in Section 4.1 of Philips and Shi (2019).
 #' Also See Okun, Ball, Leigh, and Loungani (2017).
 #'
