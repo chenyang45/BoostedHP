@@ -79,9 +79,9 @@ The corresponding cycle is
 
 The optimization problem admits a closed form solution. 
 The estimated trend can be written as
-\begin{equation}
+\begin{equation*}
 \widehat{f}^{\mathrm{HP}}=S x,
-\end{equation}
+\end{equation*}
 where $S$ is a deterministic $n\times n$ matrix and $x=(x_1,...,x_n)'$ is the sample data.
 The estimated 
 trend is
