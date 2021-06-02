@@ -24,7 +24,7 @@
 #' @details
 #'
 #' This is the main function of implementing the boosted HP filter (Phillisp and
-#' Shi, 2019). The arguments accommendate the orginal HP filter (\code{iter =
+#' Shi, 2021). The arguments accommendate the orginal HP filter (\code{iter =
 #' FALSE}), the boosted HP filter with the BIC stopping criterion (\code{stopping =
 #' "BIC"}),
 #' or ADF test stopping criterion
@@ -42,9 +42,7 @@
 #'
 #' @references
 #'
-#' Phillips, Peter CB, and Zhentao Shi. "Boosting: Why you can use the hp
-#' filter." arXiv: 1905.00175, Cowles Foundation Discussion Paper No.2192,
-#' (2019).
+#' Peter Phillips and Zhentao Shi, 2021: "Boosting: Why You Can Use the HP Filter," International Economic Review, 62(2), 521-570
 #'
 #'
 #' @export

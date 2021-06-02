@@ -3,7 +3,6 @@
 \docType{package}
 \name{bHP}
 \alias{bHP}
-\alias{bHP-package}
 \title{bHP: Package for the boosted HP filter}
 \description{
 The boosted HP filter by Phillips and Shi (2019)
@@ -13,7 +12,5 @@ The boosted HP filter by Phillips and Shi (2019)
 generic methods.
 }
 \references{
-Phillips, Peter CB, and Zhentao Shi.
-"Boosting: Why you can use the hp filter."
-arXiv: 1905.00175, Cowles Foundation Discussion Paper No.2192, (2019).
+Peter Phillips and Zhentao Shi, 2021: "Boosting: Why You Can Use the HP Filter," International Economic Review, 62(2), 521-570
 }

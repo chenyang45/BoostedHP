@@ -7,3 +7,5 @@
 *.Rcheck*
 inst/doc
 *.bib
+*.bak
+*.sav

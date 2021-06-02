@@ -4,8 +4,14 @@
 \alias{BoostedHP}
 \title{Boosting the Hodrick-Prescott Filter}
 \usage{
-BoostedHP(x, lambda = 1600, iter = TRUE, stopping = "BIC",
-  sig_p = 0.05, Max_Iter = 100)
+BoostedHP(
+  x,
+  lambda = 1600,
+  iter = TRUE,
+  stopping = "BIC",
+  sig_p = 0.05,
+  Max_Iter = 100
+)
 }
 \arguments{
 \item{x}{is a raw time series to be filtered.}
@@ -38,7 +44,7 @@ All in one function of conducting the boosted HP-filter.
 }
 \details{
 This is the main function of implementing the boosted HP filter (Phillisp and
-Shi, 2019). The arguments accommendate the orginal HP filter (\code{iter =
+Shi, 2021). The arguments accommendate the orginal HP filter (\code{iter =
 FALSE}), the boosted HP filter with the BIC stopping criterion (\code{stopping =
 "BIC"}),
 or ADF test stopping criterion
@@ -74,7 +80,5 @@ bx_ADF <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "adf")
 bx_nonstop <- BoostedHP(IRE, lambda = lam, iter= TRUE, stopping = "nonstop")
 }
 \references{
-Phillips, Peter CB, and Zhentao Shi. "Boosting: Why you can use the hp
-filter." arXiv: 1905.00175, Cowles Foundation Discussion Paper No.2192,
-(2019).
+Peter Phillips and Zhentao Shi, 2021: "Boosting: Why You Can Use the HP Filter," International Economic Review, 62(2), 521-570
 }

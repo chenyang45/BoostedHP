@@ -6,7 +6,7 @@ Authors@R: c(
     person("Yang", "Chen", role = c("aut", "cre"), email = "chen_yang@link.cuhk.edu.hk"),
     person("Zhentao", "Shi", role = c("aut"), email = "shizhentao@gmail.com" ) )
 Description: R package for the boosted HP filter, in 
-  Peter Phillips and Zhentao Shi (2019): "Boosting: Why you can use the HP filter." 
+  Peter Phillips and Zhentao Shi (2021): "Boosting: Why You Can Use the HP Filter," *International Economic Review*, 62(2), 521-570
   arXiv: 1905.00175, Cowles Foundation Discussion Paper No.2192.
 License: MIT
 Encoding: UTF-8
@@ -18,7 +18,7 @@ Imports:
     plotly,
     magrittr,
     tseries
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 Suggests: 
     knitr,
     rmarkdown

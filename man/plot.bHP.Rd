@@ -4,13 +4,25 @@
 \alias{plot.bHP}
 \title{Plot method for class \code{bHP}}
 \usage{
-\method{plot}{bHP}(x, plot_type = "dynamic", interval_t = 0.3,
-  ylab = "", col_raw = "#2D5375", col_trend_h = "#FBB545",
-  col_trend_f = "red", col_pvalue_BIC = "red", raw_alpha = 255,
-  trend_h_alpha = 75, trend_f_alpha = 255, pvalue_BIC_alpha = 255,
-  legend_location = "upleft", iteration_location = "downright",
-  cex_text = 1.7, cex_legend = 1.5, main = paste0("Figure of ",
-  x$stopping, " bHP (", plot_type, ")"))
+\method{plot}{bHP}(
+  x,
+  plot_type = "dynamic",
+  interval_t = 0.3,
+  ylab = "",
+  col_raw = "#2D5375",
+  col_trend_h = "#FBB545",
+  col_trend_f = "red",
+  col_pvalue_BIC = "red",
+  raw_alpha = 255,
+  trend_h_alpha = 75,
+  trend_f_alpha = 255,
+  pvalue_BIC_alpha = 255,
+  legend_location = "upleft",
+  iteration_location = "downright",
+  cex_text = 1.7,
+  cex_legend = 1.5,
+  main = paste0("Figure of ", x$stopping, " bHP (", plot_type, ")")
+)
 }
 \arguments{
 \item{x}{an object of class \code{bHP}}

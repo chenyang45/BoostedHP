@@ -4,9 +4,16 @@
 \alias{print.bHP}
 \title{Print method for class 'bHP'}
 \usage{
-\method{print}{bHP}(x, type = "bHP", trend_hist = TRUE,
-  select_trend_hist = c(1), Head = FALSE, Tail = FALSE,
-  print_type = "text", digit = 8)
+\method{print}{bHP}(
+  x,
+  type = "bHP",
+  trend_hist = TRUE,
+  select_trend_hist = c(1),
+  Head = FALSE,
+  Tail = FALSE,
+  print_type = "text",
+  digit = 8
+)
 }
 \arguments{
 \item{x}{an object of class 'bHP'}
